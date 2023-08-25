@@ -20,6 +20,8 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
 
       - name: Firebase Deploy
         run: npm run deploy
