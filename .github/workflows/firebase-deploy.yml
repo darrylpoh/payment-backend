@@ -1,15 +1,27 @@
-name: Deploy the main branch
+name: Firebase Deploy
+
 on:
   push:
     branches:
       - main
+
 jobs:
-  main:
-    name: Deploy to Firebase
+  deploy:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v2
-    - uses: jsryudev/deploy-firebase-functions@v0.0.2
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        FIREBASE_PROJECT: firebase-project-id
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Firebase Deploy
+        run: npm firebase deploy --only functions
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
