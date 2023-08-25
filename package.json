@@ -1,0 +1,33 @@
+{
+  "name": "clumsy-application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js",
+    "deploy": "firebase deploy --only functions:api",
+    "serve": "firebase emulators:start --only functions --inspect-functions"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JowettC/clumsy-application.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JowettC/clumsy-application/issues"
+  },
+  "homepage": "https://github.com/JowettC/clumsy-application#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "firebase-function": "^1.4.60",
+    "nodemon": "^3.0.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "engines": {
+    "node": "18"
+  }
+}
