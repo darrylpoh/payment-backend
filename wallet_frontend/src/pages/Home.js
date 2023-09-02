@@ -115,7 +115,7 @@ export default function Home() {
                                 <Link style={linkStyle}> {/* TODO: ADD THE HREF LINK */}
                                     <Box display={'flex'}>
                                         <Box marginY={"auto"}>
-                                            <PaidIcon color='tertiary'/>
+                                            <AddCardIcon color='tertiary'/>
                                         </Box>
                                         <Box marginLeft={2} flexGrow={1}>
                                             <Typography variant='body1'>Top up</Typography>
