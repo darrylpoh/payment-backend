@@ -12,21 +12,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const theme = createTheme();
+import Logo from '../assets/tiktokLogo.png';
 
 export default function Login() {
 //   const handleSubmit = (event) => {
@@ -49,30 +35,29 @@ export default function Login() {
 
   return (
     <Container component="main" maxWidth="xs">
-    <CssBaseline />
     <Box
         sx={{
-        marginTop: '35%',
+        marginTop: '50%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         }}
     >
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main', color: 'black' }}>
-        <LockOutlinedIcon />
+        <Avatar sx={{ m: 1, bgcolor: 'primary.main', color: 'black' }}>
+            <Box component="img" src={Logo} height={40}></Box>
         </Avatar>
         <Typography component="h1" variant="h5">
-            Use your SMU Email to Login!
+            Login to TikTok Wallet
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
         <TextField
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
             autoFocus
         />
         <TextField
@@ -91,11 +76,10 @@ export default function Login() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
         >
-            Sign In
+            Get email OTP
         </Button>
         </Box>
     </Box>
-    {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
     </Container>
   );
 }

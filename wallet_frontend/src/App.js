@@ -5,6 +5,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import History from "./pages/History";
+import Profile from "./pages/Profile";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 function App() {
@@ -14,6 +16,8 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="/Login" element={<Login />} />
+                <Route exact path="/History" element={<History />} />
+                <Route exact path="/Profile" element={<Profile />} />
             </Routes>
             <Footer />
         </Router>

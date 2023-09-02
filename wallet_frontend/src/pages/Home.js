@@ -6,6 +6,7 @@ import PaidIcon from '@mui/icons-material/Paid';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import TransactionLine from '../components/TransactionLine';
 
 const features = [
     [<AddCardIcon fontSize='large' color='secondary' />, 'Top Up'], 
@@ -20,17 +21,14 @@ const recipients = [
 ]
 
 const transactions = [ 
-    ["T003", "username3", "Wei Bin", 12.4],
-    ["T003", "username2", "Darryl", -1.2],
+    ["T005", "username3", "Wei Bin", 12.4],
+    ["T004", "username2", "Darryl", -1.2],
     ["T003", "username1", "Bernice", -6.50],
     ["T002", "username1", "Bernice", 8.00],
     ["T001", "username3", "Wei Bin", -3.20]
 ]
 
-const linkStyle = {
-    textDecoration: 'none', // Remove underline
-    color: 'inherit',     // Use the default text color
-  };
+
 
 export default function Home() {
   return (
@@ -94,40 +92,7 @@ export default function Home() {
                 <Box justifyContent={"space-evenly"}>
                     {/* TODO: HARDCODE */}
                     {transactions.map((transaction) => (
-                        <Box marginX={2} paddingY={2} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
-                            {transaction[3] < 0 && 
-                                <Link style={linkStyle}> {/* TODO: ADD THE HREF LINK */}
-                                    <Box display={'flex'}>
-                                        <Box marginY={"auto"}>
-                                            <PaidIcon color='secondary'/>
-                                        </Box>
-                                        <Box marginLeft={2} flexGrow={1}>
-                                            <Typography variant='body1'>Payment</Typography>
-                                            <Typography variant='body2'>{transaction[2]} ({transaction[1]})</Typography>
-                                        </Box>
-                                        <Box marginRight={2} >
-                                            <Typography variant="p" color={"secondary"} sx={{ fontWeight: 'bold' }}>{transaction[3].toFixed(2)}</Typography>
-                                        </Box>
-                                    </Box>
-                                </Link>
-                            }
-                            {transaction[3] > 0 && 
-                                <Link style={linkStyle}> {/* TODO: ADD THE HREF LINK */}
-                                    <Box display={'flex'}>
-                                        <Box marginY={"auto"}>
-                                            <AddCardIcon color='tertiary'/>
-                                        </Box>
-                                        <Box marginLeft={2} flexGrow={1}>
-                                            <Typography variant='body1'>Top up</Typography>
-                                            <Typography variant='body2'>{transaction[2]} ({transaction[1]})</Typography>
-                                        </Box>
-                                        <Box marginRight={2} >
-                                            <Typography variant="p" color={"tertiary.main"} sx={{ fontWeight: 'bold' }}>{transaction[3].toFixed(2)}</Typography>
-                                        </Box>
-                                    </Box>
-                                </Link>
-                            }
-                        </Box>
+                        <TransactionLine transaction={transaction}/>
                     ))}
                     <Link href='/History'>
                         <Box marginY={1} display={"flex"} justifyContent={'center'}>
