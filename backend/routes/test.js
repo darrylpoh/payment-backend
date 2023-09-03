@@ -25,8 +25,8 @@ router.get('/items', (req, res) => {
  *       200:
  *         description: just some test functions
  */
-router.get('/scold', (req, res) => {
-    res.json("fuck you");
+router.get('/', (req, res) => {
+    res.json("application is up and running");
   });
 
 module.exports = router;

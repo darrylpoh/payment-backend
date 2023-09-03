@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Firebase Client Test</title>
+    <!-- Include the latest version of the Firebase JavaScript SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.4.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.4.1/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+    <h1>Firebase Client Test</h1>
+    <!-- label -->
+    <label for="tokenDisplay">User Token:</label>
+    <textarea id="tokenDisplay" rows="5" cols="50"></textarea>
+
+    <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCmPIUE1hddy3gaeBP6Z3-GJbbHYgj1WY4",
+            authDomain: "tech-series-regine-carry.firebaseapp.com",
+            projectId: "tech-series-regine-carry",
+            storageBucket: "tech-series-regine-carry.appspot.com",
+            messagingSenderId: "758786183712",
+            appId: "1:758786183712:web:f89ed78d7d60b12298e245",
+            measurementId: "G-7F4ER9CWC2"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Example: Sign in with email and password
+        //     "email":"JohnnyDoe@test.com",
+        // "password":"test123"
+        var email = "john@example.com";
+        var password = "test123";
+
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Access the user token
+                return userCredential.user.getIdToken();
+            })
+            .then((token) => {
+                // Add "Bearer " in front of the token
+                var bearerToken = "Bearer " + token;
+
+                // Display the token in the textarea
+                var tokenDisplay = document.getElementById("tokenDisplay");
+                tokenDisplay.value = bearerToken;
+            })
+            .catch((error) => {
+                console.log("Sign in error:", error);
+            });
+    </script>
+</body>
+
+</html>

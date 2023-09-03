@@ -27,14 +27,14 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 
 // Use the test router
 app.use('/test', testRouter);
-
+app.use('/user', require('./routes/user'));
 app.get('/', (req, res) => {
     res.json("API server is running fine");
 });
 
 
-// app.listen(port, () => {
-//     console.log(`Server started on http://localhost:${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Server started on http://localhost:${port}`);
+});
 
-exports.api = functions.https.onRequest(app)
+// exports.api = functions.https.onRequest(app)
