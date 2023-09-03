@@ -3,6 +3,11 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import dayjs, { Dayjs } from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateField } from '@mui/x-date-pickers/DateField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
@@ -14,10 +19,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logo from '../assets/tiktokLogo.png';
 
-export default function Login() {
+export default function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
-    window.location.href = "/LoginOTP"
+    window.location.href = "/Login"
 //     const data = new FormData(event.currentTarget);
 //     let loginData = {
 //       email: data.get('email'),
@@ -34,23 +39,36 @@ export default function Login() {
 //       })
   };
 
+  const [dob, setDob] = React.useState(dayjs('2000-01-01'));
+
   return (
     <Container component="main" maxWidth="xs">
     <Box
         sx={{
-        marginTop: '50%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         }}
+        paddingBottom={16}
+        marginTop={10}
     >
         <Avatar sx={{ m: 1, bgcolor: 'primary.main', color: 'black' }}>
             <Box component="img" src={Logo} height={40}></Box>
         </Avatar>
         <Typography component="h1" variant="h5">
-            Login to TikTok Wallet
+            Sign up for a TikTok Wallet
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+            <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                label="Full Name"
+                name="name"
+                autoComplete="name"
+                autoFocus
+            />
             <TextField
                 margin="normal"
                 required
@@ -65,11 +83,54 @@ export default function Login() {
                 margin="normal"
                 required
                 fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+            />
+            <TextField
+                margin="normal"
+                fullWidth
+                id="phonenum"
+                label="Phone Number"
+                name="phonenumber"
+                autoComplete="phonenumber"
+                autoFocus
+            />
+            <Box marginY={1}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DemoContainer components={['DateField']}>
+                        <DateField
+                            label="Date of Birth"
+                            id="dob"
+                            name="dob"
+                            value={dob}
+                            onChange={(newDob) => setDob(newDob)}
+                            format="DD-MMM-YYYY"
+                            required
+                        />
+                    </DemoContainer>
+                </LocalizationProvider>
+            </Box>
+            <TextField
+                margin="normal"
+                required
+                fullWidth
                 name="password"
                 label="Password"
                 type="password"
                 id="password"
                 autoComplete="current-password"
+            />
+            <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="cfmpassword"
+                label="Confirm Password"
+                type="cfmpassword"
+                id="cfmpassword"
             />
             <Button
                 type="submit"
@@ -77,11 +138,11 @@ export default function Login() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
             >
-                Get email OTP
+                Sign up
             </Button>
         </Box>
-        <Link href="/Register">
-            <Typography variant="p">Register for a new account</Typography>
+        <Link href="/Login">
+            <Typography variant="p">Login to existing account</Typography>
         </Link>
     </Box>
     </Container>

@@ -31,7 +31,6 @@ export default function Transfer() {
 
   return (
     <Container component="main" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: '50px',

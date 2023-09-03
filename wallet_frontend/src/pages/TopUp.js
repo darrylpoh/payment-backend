@@ -60,7 +60,6 @@ export default function TopUp() {
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
         <div
           style={{
             display: 'flex',
