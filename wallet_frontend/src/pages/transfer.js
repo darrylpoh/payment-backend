@@ -81,7 +81,7 @@ export default function Transfer() {
               <MenuItem value="JPY">JPY</MenuItem>
               <MenuItem value="INR">INR</MenuItem>
               <MenuItem value="RUPIAH">RUPIAH</MenuItem>
-              <MenuItem value="hell money">Hell Money</MenuItem>
+            
             </Select>
           </FormControl>
 
