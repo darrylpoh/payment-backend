@@ -1,5 +1,5 @@
-import {React, useEffect, useState} from 'react';
-import {Stack, Chip, Box, Avatar, Table, TableRow, TableCell, TableBody, Link} from '@mui/material';
+import {React} from 'react';
+import {Box, Avatar, Table, TableRow, TableCell, TableBody, Link} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Logo from '../assets/tiktokLogo.png';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';

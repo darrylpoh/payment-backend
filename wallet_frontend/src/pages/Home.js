@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Paper, Button, Link, Typography, Box, Card } from '@mui/material';
+import React from 'react';
+import { Button, Link, Typography, Box, Card } from '@mui/material';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import PaidIcon from '@mui/icons-material/Paid';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
