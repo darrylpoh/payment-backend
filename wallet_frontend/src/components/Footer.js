@@ -19,12 +19,11 @@ import PaidIcon from '@mui/icons-material/Paid';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-
 const pages = [
                 [<HomeIcon fontSize='large' color='primary' />, 'Home'], 
                 [<AddCardIcon fontSize='large' color='primary' />, 'Top Up'], 
                 [<PaidIcon fontSize='large' color='primary' />, 'Transfer'], 
-                [<ReceiptLongIcon fontSize='large' color='primary' />, 'History'], 
+                [<ReceiptLongIcon fontSize='large' color='primary' />, 'History'],
                 [<AccountCircleIcon fontSize='large' color='primary' />, 'Profile']
               ];
 

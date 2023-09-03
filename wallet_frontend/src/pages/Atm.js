@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,12 +15,65 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Logo from '../assets/tiktokLogo.png';
+import QR from '../assets/qr.png';
+
+
+function StatusComponent({ open, onClose }) {
+  const [selectedTab, setSelectedTab] = useState('chat');
+
+  const handleTabChange = (tab) => {
+    setSelectedTab(tab);
+  };
+
+  return (
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+      <DialogTitle>Status</DialogTitle>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <Button
+          variant={selectedTab === 'chat' ? 'contained' : 'outlined'}
+          color="secondary"
+          onClick={() => handleTabChange('chat')}
+        >
+          Chat History
+        </Button>
+        <Button
+          variant={selectedTab === 'qr' ? 'contained' : 'outlined'}
+          color="secondary"
+          onClick={() => handleTabChange('qr')}
+          style={{ marginLeft: '8px' }}
+        >
+          QR Code
+        </Button>
+      </div>
+      {/* TODO add chat history */}
+      <DialogContent>
+        {selectedTab === 'chat' && (
+          <div>
+            <p>Chat history</p>
+          </div>
+        )}
+        {selectedTab === 'qr' && (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            {/* TODO display live QR code if want */}
+            <img src={QR} alt="QR Code" style={{ width: '200px', height: '200px' }} />
+          </div>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose} color="primary">
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
 
 export default function Atm() {
-  const [amount, setAmount] = React.useState('');
-  const [currency, setCurrency] = React.useState('SGD');
-  const [recipient, setRecipient] = React.useState('');
-  const [pendingRequests, setPendingRequests] = React.useState([
+  const [amount, setAmount] = useState('');
+  const [currency, setCurrency] = useState('SGD');
+  const [recipient, setRecipient] = useState('');
+  const [pendingRequests, setPendingRequests] = useState([
+    // TODO parse through db for list of recipients
     {
       recipient: 'Jowett',
       amount: '5',
@@ -41,20 +94,21 @@ export default function Atm() {
     },
     {
       recipient: 'Yee Sen',
-      amount: '250',
+      amount: '25',
       currency: 'SGD',
       isCurrentUserRequest: false,
     },
     {
       recipient: 'Darryl',
-      amount: '210',
+      amount: '99',
       currency: 'SGD',
       isCurrentUserRequest: false,
     },
   ]);
-  const [selectedRequest, setSelectedRequest] = React.useState(null);
-  const [openChat, setOpenChat] = React.useState(false);
-  const [chatMessage, setChatMessage] = React.useState('');
+  const [selectedRequest, setSelectedRequest] = useState(null);
+  const [openChat, setOpenChat] = useState(false);
+  const [chatMessage, setChatMessage] = useState('');
+  const [statusDialogOpen, setStatusDialogOpen] = useState(false);
 
   const handleAmountChange = (event) => {
     const inputValue = event.target.value;
@@ -65,10 +119,6 @@ export default function Atm() {
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
-  };
-
-  const handleRecipientChange = (event) => {
-    setRecipient(event.target.value);
   };
 
   const handleRequestTransfer = () => {
@@ -99,6 +149,10 @@ export default function Atm() {
     closeChatDialog();
   };
 
+  const handleStatusButtonClick = () => {
+    setStatusDialogOpen(true);
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -118,7 +172,6 @@ export default function Atm() {
           ATM Transfer
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
-
           <FormControl fullWidth sx={{ mt: 2 }}>
             <InputLabel id="currency-label">Currency</InputLabel>
             <Select
@@ -173,7 +226,6 @@ export default function Atm() {
           marginBottom: 0,
         }}
       >
-        {/* ... (Additional fees message) ... */}
 
         <Typography variant="h6">Your Transfer Requests:</Typography>
         <ul>
@@ -185,7 +237,8 @@ export default function Atm() {
                 <Button
                   variant="outlined"
                   color="secondary"
-                  sx={{ml: 1 }}
+                  sx={{ ml: 1 }}
+                  onClick={handleStatusButtonClick}
                 >
                   Status
                 </Button>
@@ -194,30 +247,34 @@ export default function Atm() {
         </ul>
 
         <Typography variant="h6">Transfer Requests Near You:</Typography>
-        <ul>
-          {pendingRequests
-            .filter((request) => !request.isCurrentUserRequest)
-            .map((request, index) => (
-              <li key={index}>
-                {request.recipient}: {request.amount} {request.currency}
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  onClick={() => openChatDialog(request)}
-                  sx={{ml: 1 }}
-                >
-                  Chat
-                </Button>
-              </li>
-            ))}
+        <ul style={{ padding: '10px 0' }}>
+            {pendingRequests
+                .filter((request) => !request.isCurrentUserRequest)
+                .map((request, index) => (
+                <li key={index} style={{ margin: '10px 0' }}>
+                    {request.recipient}: {request.amount} {request.currency}
+                    <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => openChatDialog(request)}
+                    sx={{ ml: 1 }}
+                    >
+                    Chat
+                    </Button>
+                </li>
+                ))}
         </ul>
+
       </Box>
+
+      {/* Render the StatusComponent */}
+      <StatusComponent open={statusDialogOpen} onClose={() => setStatusDialogOpen(false)} />
 
       {/* Chat Dialog */}
       <Dialog open={openChat} onClose={closeChatDialog}>
         <DialogTitle>Chat with {selectedRequest?.recipient}</DialogTitle>
         <DialogContent>
-          {/* Display chat messages here */}
+          {/* TODO populate chats */}
           <TextField
             margin="normal"
             required
