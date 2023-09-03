@@ -23,7 +23,7 @@ const verifyToken = (req, res, next) => {
         // }
         User.findOne({
             where: {
-              uid: decodedToken.uid
+              user_id: decodedToken.uid
             }
           })
           .then((user) => {
@@ -32,11 +32,7 @@ const verifyToken = (req, res, next) => {
                 message: 'Unauthorized'
               });
             }
-            req.user = {
-              uid: decodedToken.uid,
-              email: decodedToken.email,
-            };
-            req.userInfo = req.user;
+            req.userInfo = user
             next();
           })
   
