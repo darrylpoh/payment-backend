@@ -1,8 +1,6 @@
-import {React, useEffect, useState} from 'react';
-import {Stack, Chip, Box,Table, TableRow, TableCell, TableBody} from '@mui/material';
+import {React} from 'react';
+import {Box,Table, TableRow, TableCell, TableBody} from '@mui/material';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import TransactionLine from '../components/TransactionLine';
 
 export default function TransactionIndiv() {
 
