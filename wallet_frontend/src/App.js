@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import History from "./pages/History";
 import Profile from "./pages/Profile";
+import Transfer from "./pages/transfer";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="/Login" element={<Login />} />
+                <Route exact path="/Transfer" element={<Transfer/>} />
                 <Route exact path="/History" element={<History />} />
                 <Route exact path="/Profile" element={<Profile />} />
             </Routes>
