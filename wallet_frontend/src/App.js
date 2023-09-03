@@ -5,10 +5,15 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import LoginOTP from "./pages/LoginOTP";
+import Register from "./pages/Register";
 import TopUp from "./pages/TopUp";
 import Atm from "./pages/Atm"
 import History from "./pages/History";
+import TransactionIndiv from "./pages/TransactionIndiv";
 import Profile from "./pages/Profile";
+import ChangePassword from "./pages/ChangePw";
+import ChangeEmail from "./pages/ChangeEmail";
 import Transfer from "./pages/transfer";
 import { createTheme, ThemeProvider } from "@mui/material";
 
@@ -19,11 +24,16 @@ function App() {
             <Routes>
                 <Route exact path="/" element={<Home />} />
                 <Route exact path="/Login" element={<Login />} />
+                <Route exact path="/LoginOTP" element={<LoginOTP />} />
+                <Route exact path="/Register" element={<Register />} />
                 <Route exact path="/Transfer" element={<Transfer/>} />
                 <Route exact path="/History" element={<History />} />
+                <Route exact path="/Transaction" element={<TransactionIndiv />} />
                 <Route exact path="/TopUp" element={<TopUp />} />
                 <Route exact path="/Atm" element={<Atm />} />
                 <Route exact path="/Profile" element={<Profile />} />
+                <Route exact path="/ChangePassword" element={<ChangePassword />} />
+                <Route exact path="/ChangeEmail" element={<ChangeEmail />} />
             </Routes>
             <Footer />
         </Router>

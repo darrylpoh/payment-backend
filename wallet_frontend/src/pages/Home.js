@@ -23,12 +23,12 @@ const recipients = [
 ]
 
 const transactions = [ 
-    ["T005", "username3", "Wei Bin", 12.4],
-    ["T004", "username2", "Darryl", -1.2],
-    ["T003", "username1", "Bernice", -6.50],
-    ["T002", "username1", "Bernice", 8.00],
-    ["T001", "username3", "Wei Bin", -3.20]
-]
+    {"transactionId": "T004", "username": "username2", "fullName": "Darryl", "amount": -1.20, "date": "2023-08-01", "status": "success"},
+    {"transactionId": "T003", "username": "username1", "fullName": "Bernice","amount":  -6.50, "date": "2023-09-02", "status": "success"},
+    {"transactionId": "T002", "username": "username1", "fullName": "Bernice","amount":  8.00, "date": "2023-09-01", "status": "failed"},
+    {"transactionId": "T001", "username": "username3", "fullName": "Wei Bin","amount":  -3.20, "date": "2023-08-03", "status": "failed"},
+    {"transactionId": "T005", "username": "username3", "fullName": "Wei Bin","amount":  12.40, "date": "2023-09-02", "status": "success"},
+  ]
 
 
 

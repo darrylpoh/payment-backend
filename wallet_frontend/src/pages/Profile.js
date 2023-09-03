@@ -1,47 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import {Typography,Box,TextField,Select,MenuItem,Autocomplete,Checkbox, FormGroup,FormControlLabel,Grid,Avatar,autocompleteClasses,Button} from '@mui/material';
-import { Form } from "react-router-dom";
-import { minWidth, width } from "@mui/system";
+import {React, useEffect, useState} from 'react';
+import {Stack, Chip, Box, Avatar, Table, TableRow, TableCell, TableBody, Link} from '@mui/material';
+import Typography from '@mui/material/Typography';
+import Logo from '../assets/tiktokLogo.png';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
-export default function MemberCreate() {
-  const [matricNum, setMatricNum] = useState('1301938'); 
-  const [studentDetails, setStudentDetails] = useState({ 
-    matriculatedName: '',
-    smuEmail: '',
-    matricNum: '', 
-    telegramUser: '',
-    phoneNum: '',
-  })
+const linkStyle = {
+  textDecoration: 'none', // Remove underline
+  color: 'inherit',     // Use the default text color
+};
 
-  const centerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  };
-
-//   useEffect(() => { 
-//     let tokenInfo = decodeToken(window.localStorage.getItem('authtoken'))
-//     console.log(tokenInfo)
-//     setMatricNum(tokenInfo.matricNum)
-//     getStudentByMatric(tokenInfo.matricNum) 
-//       .then(response => { 
-//         console.log(response);
-//         setStudentDetails(response)
-//       })
-//       .catch(error => { 
-//         console.log(error.message); 
-//       })
-//   }, [])
-
-  function logout() { 
-    // deleteToken(); 
-    window.location.href = '/'
-  }
+export default function TransactionIndiv() {
 
   return (
-    <Box>
-        
+    <Box
+        sx={{
+        marginTop: '45%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        }}
+    >
+      <Avatar sx={{ m: 1, bgcolor: 'primary.main', color: 'black' }}>
+          <Box component="img" src={Logo} height={40}></Box>
+      </Avatar>
+      <Box marginX={2} marginTop={2} width="80%">
+        <Table aria-label="simple table">
+          <TableBody>
+              <TableRow sx={{ '&:last-child td, &:last-child th': { borderBottom: '1px solid', borderColor: 'primary.light' } }}>
+                <TableCell component="th" scope="row"><b>Full name</b></TableCell>
+                <TableCell align="left">Bernice</TableCell>
+              </TableRow>
+              <TableRow sx={{ '&:last-child td, &:last-child th': { borderBottom: '1px solid', borderColor: 'primary.light' } }}>
+                <TableCell component="th" scope="row"><b>Username</b></TableCell>
+                <TableCell align="left">username1</TableCell>
+              </TableRow>
+              <TableRow sx={{ '&:last-child td, &:last-child th': { borderBottom: '1px solid', borderColor: 'primary.light' } }}>
+                <TableCell component="th" scope="row"><b>Password</b></TableCell>
+                <TableCell align="left">******</TableCell>
+              </TableRow>
+              <TableRow sx={{ '&:last-child td, &:last-child th': { borderBottom: '1px solid', borderColor: 'primary.light' } }}>
+                <TableCell component="th" scope="row"><b>Email</b></TableCell>
+                <TableCell align="left">bernice.teo@smu.edu.sg</TableCell>
+              </TableRow>
+          </TableBody>
+        </Table>
+        <Link style={linkStyle} href='/ChangePassword'> {/* TODO: update href */}
+            <Box paddingY={1} display={"flex"} alignItems={'center'} justifyContent={'space-between'} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
+                <Typography variant="caption" color={"tertiary.main"} marginLeft={2}>Change password</Typography>
+                <Box marginRight={2}>
+                  <NavigateNextIcon marginY={"auto"} color={"tertiary"}/>
+                </Box>
+            </Box>
+        </Link>
+        <Link style={linkStyle} href='/ChangeEmail'> {/* TODO: update href */}
+            <Box paddingY={1} display={"flex"} alignItems={'center'} justifyContent={'space-between'} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
+                <Typography variant="caption" color={"tertiary.main"} marginLeft={2}>Change OTP email</Typography>
+                <Box marginRight={2}>
+                  <NavigateNextIcon marginY={"auto"} color={"tertiary"}/>
+                </Box>
+            </Box>
+        </Link>
+      </Box>
     </Box>
-
-  )
+  );
 }
