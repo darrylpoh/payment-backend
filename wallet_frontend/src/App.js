@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import TopUp from "./pages/TopUp";
+import Atm from "./pages/Atm"
 import History from "./pages/History";
 import Profile from "./pages/Profile";
 import Transfer from "./pages/transfer";
@@ -21,6 +22,7 @@ function App() {
                 <Route exact path="/Transfer" element={<Transfer/>} />
                 <Route exact path="/History" element={<History />} />
                 <Route exact path="/TopUp" element={<TopUp />} />
+                <Route exact path="/Atm" element={<Atm />} />
                 <Route exact path="/Profile" element={<Profile />} />
             </Routes>
             <Footer />

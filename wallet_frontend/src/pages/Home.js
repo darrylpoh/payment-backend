@@ -5,13 +5,15 @@ import AddCardIcon from '@mui/icons-material/AddCard';
 import PaidIcon from '@mui/icons-material/Paid';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ContactlessIcon from '@mui/icons-material/Contactless';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import TransactionLine from '../components/TransactionLine';
 
 const features = [
     [<AddCardIcon fontSize='large' color='secondary' />, 'Top Up'], 
     [<PaidIcon fontSize='large' color='secondary' />, 'Transfer'], 
-    [<ReceiptLongIcon fontSize='large' color='secondary' />, 'History'], 
+    [<ContactlessIcon fontSize='large' color='secondary' />, 'Atm'],
+    [<ReceiptLongIcon fontSize='large' color='secondary' />, 'History'],  
   ];
 
 const recipients = [ 
