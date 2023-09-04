@@ -32,7 +32,7 @@ export default function Transfer() {
     <Container component="main" maxWidth="xs">
       <Box
         sx={{
-          marginTop: '50px',
+          marginTop: '40%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -46,7 +46,7 @@ export default function Transfer() {
           Make a transfer
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
-          <FormControl fullWidth>
+          <FormControl fullWidth margin='normal'>
             <InputLabel id="recipient-label">Recipient</InputLabel>
             <Select
               labelId="recipient-label"
@@ -64,25 +64,16 @@ export default function Transfer() {
             </Select>
           </FormControl>
 
-          <FormControl fullWidth  sx={{ mt: 2 }}>
-            <InputLabel id="currency-label">Currency</InputLabel>
-            <Select
-              labelId="currency-label"
-              id="currency"
-              name="currency"
-              label="Currency"
-              value={currency}
-              onChange={handleCurrencyChange}
-            >
-              <MenuItem value="SGD">SGD</MenuItem>
-              <MenuItem value="USD">USD</MenuItem>
-              <MenuItem value="JPY">JPY</MenuItem>
-              <MenuItem value="INR">INR</MenuItem>
-              <MenuItem value="RUPIAH">RUPIAH</MenuItem>
-            
-            </Select>
-          </FormControl>
-
+          <TextField
+            fullWidth
+            label="Currency"
+            id="currency"
+            name="currency"
+            value={currency}
+            margin="normal"
+            onChange={handleCurrencyChange}
+            disabled
+          />
 
           <TextField
             margin="normal"
@@ -97,8 +88,9 @@ export default function Transfer() {
             sx={{ width: '100%' }}
           />
 
-
-
+          <Box textAlign={'center'}>
+            <Typography variant='body1' color={'secondary.light'}>SGD 1 = SGD 1</Typography>
+          </Box>
           <Button
             type="submit"
             fullWidth
@@ -110,7 +102,7 @@ export default function Transfer() {
               // Call backend to process payment/transfer later on
             }}
           >
-            Transfer now
+            Transfer
           </Button>
         </Box>
       </Box>
@@ -125,9 +117,6 @@ export default function Transfer() {
     marginBottom:0
   }}
 >
-  <Typography variant="caption" color="secondary">
-    Additional fees may apply
-  </Typography> 
 
 
 
