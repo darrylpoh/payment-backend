@@ -32,6 +32,9 @@ const User = sequelize.define('User', {
         type: DataTypes.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
+    default_currency: {
+        type: DataTypes.STRING(100),
+    },
 }, {
     sequelize,
     tableName: 'users',
