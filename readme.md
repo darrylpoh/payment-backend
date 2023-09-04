@@ -1,5 +1,6 @@
 ## Instructions to run the backend codes (in the `backend` folder)
 1. run `npm install` to install all the dependencies
+2. create `.env` file & `credentials.json` refer to telegram for the files content
 
 ### To run the server using firebase (not recommended because of missing logs)
 2. run `npm run serve` to start the server

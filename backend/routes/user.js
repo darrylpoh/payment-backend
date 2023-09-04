@@ -24,7 +24,8 @@ router.post('/register', async (req, res) => {
         password,
         full_name,
         date_of_birth,
-        phone_number
+        phone_number,
+        default_currency
     } = req.body;
     try {
         const user = await admin.auth().createUser({
@@ -38,6 +39,7 @@ router.post('/register', async (req, res) => {
             full_name: full_name,
             date_of_birth: dayjs(date_of_birth).format('YYYY-MM-DD'),
             phone_number: phone_number,
+            default_currency: default_currency,
         });
         res.json({
             data: userInfo,
