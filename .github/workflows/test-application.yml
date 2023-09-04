@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: |
+          cd wallet-frontend
+          npm install
+          cd ../backend
+          npm install
+
+      - name: Build and test frontend
+        run: |
+          cd wallet-frontend
+          npm start
+
+      - name: Start backend server
+        run: |
+          cd ../backend-app
+          npm run start
