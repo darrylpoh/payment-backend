@@ -29,6 +29,7 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 // Use the test router
 app.use('/test', testRouter);
 app.use('/user', require('./routes/user'));
+app.use('/transaction', require('./routes/transaction'));
 app.get('/', (req, res) => {
     res.json("API server is running fine");
 });
