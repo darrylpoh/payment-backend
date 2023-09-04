@@ -27,5 +27,5 @@ jobs:
 
       - name: Start backend server
         run: |
-          cd ../backend-app
+          cd ../backend
           npm run start
