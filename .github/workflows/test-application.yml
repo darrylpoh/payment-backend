@@ -15,14 +15,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd wallet-frontend
+          cd wallet_frontend
           npm install
           cd ../backend
           npm install
 
       - name: Build and test frontend
         run: |
-          cd wallet-frontend
+          cd wallet_frontend
           npm start
 
       - name: Start backend server
