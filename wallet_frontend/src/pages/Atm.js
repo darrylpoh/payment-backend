@@ -14,7 +14,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Logo from '../assets/tiktokLogo.png';
-import QR from '../assets/qr.jpg';
+import QR from '../assets/qr.png';
 
 
 function StatusComponent({ open, onClose }) {
