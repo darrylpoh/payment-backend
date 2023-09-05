@@ -10,7 +10,6 @@ import Register from "./pages/Register";
 import TopUp from "./pages/TopUp";
 import Atm from "./pages/Atm"
 import History from "./pages/History";
-import TransactionIndiv from "./pages/TransactionIndiv";
 import Profile from "./pages/Profile";
 import ChangePassword from "./pages/ChangePw";
 import ChangeEmail from "./pages/ChangeEmail";
@@ -28,7 +27,6 @@ function App() {
                 <Route exact path="/Register" element={<Register />} />
                 <Route exact path="/Transfer" element={<Transfer/>} />
                 <Route exact path="/History" element={<History />} />
-                <Route exact path="/Transaction" element={<TransactionIndiv />} />
                 <Route exact path="/TopUp" element={<TopUp />} />
                 <Route exact path="/Atm" element={<Atm />} />
                 <Route exact path="/Profile" element={<Profile />} />

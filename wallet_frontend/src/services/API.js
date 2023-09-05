@@ -42,3 +42,18 @@ export async function getAllTransactions(auth) {
         return error; 
     }
 }
+
+export async function getWalletByUser(auth) { 
+    let api_url = baseUrl + '/wallet'; 
+    try { 
+        const response = await axios.get(api_url, { 
+            headers: {
+                'Authorization': 'Bearer ' + auth
+              }
+        }); 
+        console.log('response ', response); 
+        return response.data; 
+    } catch(error) { 
+        return error; 
+    }
+}

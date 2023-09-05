@@ -3,7 +3,6 @@ import {Box, Avatar, Table, TableRow, TableCell, TableBody, Link} from '@mui/mat
 import Typography from '@mui/material/Typography';
 import Logo from '../assets/tiktokLogo.png';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import { getUser } from '../services/API';
 
 const linkStyle = {
   textDecoration: 'none', // Remove underline
@@ -21,16 +20,13 @@ export default function TransactionIndiv() {
   }
 
   useEffect(() => { 
-    getUser(window.localStorage.getItem("authtoken"))
-      .then(response => { 
-        console.log(response)
-        setName(response.data.full_name)
-        setUsername(response.data.username)
-        setEmail(response.data.email)
-      })
-      .catch(error => { 
-        console.log(error)
-      })
+    const userDetailsJSON = window.localStorage.getItem("userDetails");
+    if (userDetailsJSON) {
+      const userDetails = JSON.parse(userDetailsJSON);
+      setName(userDetails.full_name)
+      setUsername(userDetails.username)
+      setEmail(userDetails.email)
+    }
   }, [])
 
   return (

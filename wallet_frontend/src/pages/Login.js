@@ -1,16 +1,18 @@
 import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { Avatar, Button, TextField, Link, Box, Typography, Container, Snackbar } from '@mui/material';
 import Logo from '../assets/tiktokLogo.png';
 import { firebaseAuth } from '../services/firebase';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
+import { getUser } from '../services/API';
 
 export default function Login() {
+    const [toastOpen, setToastOpen] = React.useState(false);
+    const [transition, setTransition] = React.useState(undefined);
+
+    const handleToastClose = () => {
+      setToastOpen(false);
+    };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // window.location.href = "/LoginOTP"
@@ -29,12 +31,21 @@ export default function Login() {
             console.log(user);
             window.localStorage.setItem('authtoken', user.accessToken)
             window.localStorage.setItem('userId', user.uid)
-            // window.location.href = "/LoginOTP"
+            getUser(user.accessToken) 
+                .then(response => { 
+                    const userDetailsJSON = JSON.stringify(response.data);
+                    window.localStorage.setItem("userDetails", userDetailsJSON)
+                })
+                .catch(error => {
+                    console.log(error.message)
+                })
+            window.location.href = "/LoginOTP"
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
+            setToastOpen(true);
         });
     // generateToken(loginData) 
     //   .then(response => { 
@@ -96,10 +107,17 @@ export default function Login() {
         <Link href="/Register">
             <Typography variant="p">Register for a new account</Typography>
         </Link>
-        or
         <Link href="/ChangePassword">
             <Typography variant="p">Forget password</Typography>
         </Link>
+        <Snackbar
+            open={toastOpen}
+            autoHideDuration={2000}
+            onClose={handleToastClose}
+            TransitionComponent={transition}
+            message="Email or password is invalid"
+            style={{ marginBottom: '120px' }}
+        />
     </Box>
     </Container>
   );

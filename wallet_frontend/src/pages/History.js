@@ -7,14 +7,6 @@ import { getAllTransactions } from '../services/API';
 
 
 export default function History() {
-  const transactionHardcode = [ 
-    {"transactionId": "T004", "username": "username2", "fullName": "Darryl", "amount": -1.20, "date": "2023-08-01", "status": "success"},
-    {"transactionId": "T003", "username": "username1", "fullName": "Bernice","amount":  -6.50, "date": "2023-09-02", "status": "success"},
-    {"transactionId": "T002", "username": "username1", "fullName": "Bernice","amount":  8.00, "date": "2023-09-01", "status": "failed"},
-    {"transactionId": "T001", "username": "username3", "fullName": "Wei Bin","amount":  -3.20, "date": "2023-08-03", "status": "failed"},
-    {"transactionId": "T005", "username": "username3", "fullName": "Wei Bin","amount":  12.40, "date": "2023-09-02", "status": "success"},
-  ]
-
   const [transactions, setTxn] = useState([]); 
   const [transactionsCleaned, setTxnCleaned] = useState({}); 
   const [txnMonths, setTxnMonths] = useState([]); 
@@ -66,19 +58,18 @@ export default function History() {
   }, [])
 
   useEffect(() => { 
-    transactions.sort((a, b) => {
-      // Convert the date strings to Date objects for comparison
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
+    // transactions.sort((a, b) => {
+    //   // Convert the date strings to Date objects for comparison
+    //   const dateA = new Date(a.date);
+    //   const dateB = new Date(b.date);
     
-      // Compare the dates in descending order (latest to earliest)
-      return dateB - dateA;
-    });
+    //   // Compare the dates in descending order (latest to earliest)
+    //   return dateB - dateA;
+    // });
     var transactionsCleanedTemp = {}
     var transactionsMonthTemp = []
     // TODO: need to filter away transactions where user is not sender and not recipient 
     for (const txn of transactions) { 
-      console.log(txn)
       if (cashFlowFilter !== "all") { 
         if ((cashFlowFilter === "in" && txnType(txn) === "sender") || (cashFlowFilter === "out" && txnType(txn) !== "sender")) { 
           continue
