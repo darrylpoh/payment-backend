@@ -15,6 +15,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Logo from '../assets/tiktokLogo.png';
 import QR from '../assets/qr.jpg';
+import { Card } from '@mui/material';
 
 
 function StatusComponent({ open, onClose }) {
@@ -245,7 +246,7 @@ export default function Atm() {
         </ul>
 
         <Typography variant="h6">Transfer Requests Near You:</Typography>
-        <ul style={{ padding: '10px 0' }}>
+        {/* <ul style={{ padding: '10px 0' }}>
             {pendingRequests
                 .filter((request) => !request.isCurrentUserRequest)
                 .map((request, index) => (
@@ -261,9 +262,47 @@ export default function Atm() {
                     </Button>
                 </li>
                 ))}
-        </ul>
+        </ul> */}
 
+        <Box marginX={2} marginTop={2}>
+            <Typography variant='h6' color='primary.main' display={'block'}>Recent Transactions</Typography>
+            <Box display={"flex"} flexDirection="column" alignItems="center">
+              {pendingRequests.map((request) => (
+                <div key={request.id}>
+                  {request.recipient}: {request.amount} {request.currency}
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => openChatDialog(request)}
+                    sx={{ mt: 1 }}
+                  >
+                    CHAT
+                  </Button>
+                </div>
+              ))}
+            </Box>
+        </Box>
       </Box>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
 
       {/* Render the StatusComponent */}
       <StatusComponent open={statusDialogOpen} onClose={() => setStatusDialogOpen(false)} />
