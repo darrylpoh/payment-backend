@@ -34,7 +34,7 @@ function StatusComponent({ open, onClose }) {
           color="secondary"
           onClick={() => handleTabChange('chat')}
         >
-          Chat History
+          Latest Messages
         </Button>
         <Button
           variant={selectedTab === 'qr' ? 'contained' : 'outlined'}
