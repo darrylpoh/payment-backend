@@ -32,29 +32,25 @@ function TransactionLine(props) {
         <Link style={linkStyle} href="/Transaction"> {/* TODO: ADD THE HREF LINK */}
             <Box display={'flex'}>
                 <Box marginY={"auto"}>
-                    {props.transaction.status === 'failed' && 
-                        <BlockIcon color='primary'/>
-                    }
-                    {props.transaction.amount < 0 && props.transaction.status !== 'failed' && 
+                    {window.localStorage.getItem('userId') === props.transaction.sender_id && props.transaction.status !== 'failed' && 
                         <PaidIcon color='secondary'/>
                     }
-                    {props.transaction.amount > 0 && props.transaction.status !== 'failed' && 
+                    {window.localStorage.getItem('userId') === props.transaction.receiver_id && props.transaction.status !== 'failed' && 
                         <AddCardIcon color='tertiary'/>
                     }
                 </Box>
                 <Box marginLeft={2} flexGrow={1}>
                     <Typography variant='body1'>{props.transaction.status === 'failed' ? '[Failed] ' : ""}{props.transaction.amount < 0 ? 'Payment' : 'Top up'}</Typography>
                     <Typography variant='body2'>{props.transaction.fullName} ({props.transaction.username})</Typography>
-                    <Typography variant='body2'>{props.transaction.date.split("-")[2] + " " + monthMap[props.transaction.date.split("-")[1]] + " " + props.transaction.date.split("-")[0]}</Typography>
+                    <Typography variant='body2'>{props.date.split("-")[2] + " " + monthMap[props.date.split("-")[1]] + " " + props.date.split("-")[0]}</Typography>
                 </Box>
                 <Box marginRight={2} marginY={"auto"}>
                     <Typography 
                         variant="p" 
-                        color={props.transaction.status === 'failed' ? 'primary' : props.transaction.amount < 0 ? 'secondary' : 'tertiary.main'} 
+                        color={props.transaction.amount < 0 ? 'secondary' : 'tertiary.main'} 
                         sx={{ fontWeight: 'bold' }} 
-                        style={props.transaction.status === 'failed' ? { textDecoration: 'line-through' } : {}}
                     >
-                        {props.transaction.amount.toFixed(2)}
+                        {props.transaction.amount}
                     </Typography>
                 </Box>
             </Box>
