@@ -56,6 +56,7 @@ export default function LoginOTP() {
             fullWidth
             variant="contained"
             sx={{ mt: 4, mb: 2 }}
+            color='secondary'
         >
             Continue
         </Button>

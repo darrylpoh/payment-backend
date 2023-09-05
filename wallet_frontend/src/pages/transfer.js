@@ -15,17 +15,19 @@ export default function Transfer() {
   const [amount, setAmount] = React.useState('');
   const [currency, setCurrency] = React.useState('SGD'); // Default currency is set to SGD
 
+  const exchangeRatesFromSGD = {
+    'SGD': 1, 
+    'USD': 0.74,
+    'EUR': 0.69, 
+    'GBP': 0.58,
+    'JPY': 108.51
+  }
+
   const handleAmountChange = (event) => {
     const inputValue = event.target.value;
     if (/^\d*$/.test(inputValue) || inputValue === '') {
       setAmount(inputValue);
     }
-  };
-
-
-
-  const handleCurrencyChange = (event) => {
-    setCurrency(event.target.value);
   };
 
   return (
@@ -71,7 +73,6 @@ export default function Transfer() {
             name="currency"
             value={currency}
             margin="normal"
-            onChange={handleCurrencyChange}
             disabled
           />
 

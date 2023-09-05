@@ -11,7 +11,6 @@ import { getAuth, sendPasswordResetEmail  } from 'firebase/auth';
 
 export default function ChangePassword() {
   const [toastOpen, setToastOpen] = React.useState(false);
-  const [transition, setTransition] = React.useState(undefined);
 
   const handleToastClose = () => {
     setToastOpen(false);
@@ -77,6 +76,7 @@ export default function ChangePassword() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                color='secondary'
             >
                 Get Email
             </Button>
@@ -85,7 +85,6 @@ export default function ChangePassword() {
             open={toastOpen}
             autoHideDuration={2000}
             onClose={handleToastClose}
-            TransitionComponent={transition}
             message="Invalid email format"
             style={{ marginBottom: '120px' }}
         />

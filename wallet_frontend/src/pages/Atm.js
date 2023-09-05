@@ -14,10 +14,10 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Logo from '../assets/tiktokLogo.png';
-import QR from '../assets/qr.jpg';
+import QR from '../assets/qr.png';
 import { Card, CardContent } from '@mui/material';
-
-
+import ChatIcon from '@mui/icons-material/Chat';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 function StatusComponent({ open, onClose }) {
   const [selectedTab, setSelectedTab] = useState('chat');
@@ -141,23 +141,23 @@ export default function Atm() {
   function Atmline(props) {
 
     return (
-      <Box display={"flex"} flexDirection={"column"}>
+      <Box display={"flex"} flexDirection={'column'}>
         <Box marginX={2} paddingY={2} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
-                <Box display={'flex'}>
-                    <Box flexGrow={1} marginTop={1} marginRight={20}>
-                        <Typography variant='body2'>{props.request.recipient}: {props.request.currency} {props.request.amount}</Typography>
-                    </Box>
-                    <Box marginRight={2} marginY={"auto"}>
-                      <Button
-                          variant="outlined"
-                          color="secondary"
-                          onClick={() => openChatDialog(props.request)}
-                          sx={{ mb: 1}}
-                        >
-                          CHAT
-                      </Button>
-                    </Box>
+          <Box display={'flex'} alignItems={'center'}>
+              <Box textAlign={'left'} flexGrow={1}>
+                <Box marginRight={20}>
+                    <Typography variant='body2' fontWeight={'bold'}>{props.request.recipient}</Typography>
                 </Box>
+                <Box >
+                    <Typography variant='body2'>{props.request.currency} {props.request.amount}</Typography>
+                </Box>
+              </Box>
+              <Avatar sx={{ bgcolor: 'tertiary.main', color: 'black' }}>
+                <Box marginX={'auto'} marginTop={0.5}>
+                  <ChatIcon onClick={() => openChatDialog(props.request)} color='white'/>
+                </Box>
+              </Avatar>
+          </Box>
         </Box>
       </Box>
     );
@@ -246,7 +246,7 @@ export default function Atm() {
   };
 
   return (
-    <Container marginY={'auto'} component="main" maxWidth="xs">
+    <Container marginBottom={16} component="main" maxWidth="xs">
       <Box
         sx={{
           marginTop: '50px',
@@ -309,10 +309,10 @@ export default function Atm() {
 
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
+          // display: 'flex',
+          // flexDirection: 'column',
           alignItems: 'center',
-          textAlign: 'center',
+          // textAlign: 'center',
           marginTop: 0,
           marginBottom: 0,
         }}
@@ -352,19 +352,21 @@ export default function Atm() {
             ))}
         </Box>
 
-        <Typography marginTop={10} marginBottom={5} variant="h6">Transfer Requests Near You:</Typography>
+        <Typography marginTop={4} variant="h6" display={'block'}>Transfer Requests Nearby</Typography>
           <Card variant="outlined">
               <Box justifyContent={"space-evenly"}>
                   {Atm.map((request) => (
                       <Atmline request={request}/>
                   ))}
+                  <Box marginY={1} display={"flex"} justifyContent={'center'}>
+                      <Typography variant="p" color={"primary"} style={{ textDecoration: 'underline' }}>See more</Typography>
+                      <NavigateNextIcon marginY={"auto"}/>
+                  </Box>
               </Box>
           </Card>
       </Box>
 
-      <Box marginTop={20}>
-        
-      </Box>
+      <Box marginTop={16}/>
 
       <StatusComponent open={statusDialogOpen} onClose={() => setStatusDialogOpen(false)} />
 
