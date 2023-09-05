@@ -10,6 +10,10 @@ const linkStyle = {
 };
 
 export default function TransactionIndiv() {
+  function handleLogout() { 
+    window.localStorage.removeItem('authtoken');
+    window.location.href = '/Login'
+  }
 
   return (
     <Box
@@ -52,14 +56,17 @@ export default function TransactionIndiv() {
                 </Box>
             </Box>
         </Link>
-        <Link style={linkStyle} href='/ChangeEmail'> {/* TODO: update href */}
+        {/* <Link style={linkStyle} href='/ChangeEmail'>
             <Box paddingY={1} display={"flex"} alignItems={'center'} justifyContent={'space-between'} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
                 <Typography variant="caption" color={"tertiary.main"} marginLeft={2}>Change OTP email</Typography>
                 <Box marginRight={2}>
                   <NavigateNextIcon marginY={"auto"} color={"tertiary"}/>
                 </Box>
             </Box>
-        </Link>
+        </Link> */}
+          <Box onClick={handleLogout} paddingY={1} display={"flex"} alignItems={'center'} justifyContent={'space-between'} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
+              <Typography variant="caption" color={"tertiary.main"} marginLeft={2}>Logout</Typography>
+          </Box>
       </Box>
     </Box>
   );
