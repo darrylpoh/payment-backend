@@ -7,7 +7,6 @@ import { getUser } from '../services/API';
 
 export default function Login() {
     const [toastOpen, setToastOpen] = React.useState(false);
-    const [transition, setTransition] = React.useState(undefined);
 
     const handleToastClose = () => {
       setToastOpen(false);
@@ -100,6 +99,7 @@ export default function Login() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                color='secondary'
             >
                 Get email OTP
             </Button>
@@ -114,7 +114,6 @@ export default function Login() {
             open={toastOpen}
             autoHideDuration={2000}
             onClose={handleToastClose}
-            TransitionComponent={transition}
             message="Email or password is invalid"
             style={{ marginBottom: '120px' }}
         />

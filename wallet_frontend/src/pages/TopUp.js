@@ -1,10 +1,7 @@
 import React, { useRef } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import { Button, TextField, Typography, Container, Box, Avatar, FormControl } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import FormControl from '@mui/material/FormControl';
+import Logo from '../assets/tiktokLogo.png';
 
 const theme = createTheme({
   palette: {
@@ -16,6 +13,7 @@ const theme = createTheme({
 
 export default function TopUp() {
   const amountRef = useRef(null);
+  const [currency, setCurrency] = React.useState('SGD'); // Default currency is set to SGD
 
   const handleTopUp = async () => {
     const amount = amountRef.current.value;
@@ -34,62 +32,76 @@ export default function TopUp() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs">
+      <Box
+        sx={{
+          marginTop: '40%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: 'primary.main', color: 'black' }}>
+          <Box component="img" src={Logo} height={40}></Box>
+        </Avatar>
+
+        <Typography component="h1" variant="h5" style={{ marginTop: '16px' }}>
+          Top Up Your Card
+        </Typography>
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginTop: '64px',
+            width: '100%',
+            marginTop: '24px',
           }}
         >
-          <Typography component="h1" variant="h5" style={{ marginTop: '16px' }}>
-            Top Up Your Card
-          </Typography>
-          <div
-            style={{
-              width: '100%',
-              marginTop: '24px',
-            }}
-          >
-            <form>
-              <FormControl fullWidth variant="outlined" style={{ marginTop: '16px' }}>
-                <TextField
-                  autoComplete="amount"
-                  name="amount"
-                  required
-                  fullWidth
-                  id="amount"
-                  label="Amount to top up"
-                  autoFocus
-                  variant="outlined"
-                  inputRef={amountRef}
-                  type="number"
-                />
-              </FormControl>
-              <Button
-                type="button"
+          <form>
+            <FormControl fullWidth variant="outlined">
+              <TextField
                 fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={handleTopUp}
-              >
-                Top Up
-              </Button>
-            </form>
-          </div>
+                label="Currency"
+                id="currency"
+                name="currency"
+                value={currency}
+                margin="normal"
+                disabled
+              />
+
+              <TextField
+                autoComplete="amount"
+                name="amount"
+                required
+                fullWidth
+                id="amount"
+                label="Amount to top up"
+                autoFocus
+                variant="outlined"
+                inputRef={amountRef}
+                type="number"
+                margin="normal"
+              />
+            </FormControl>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleTopUp}
+              color='secondary'
+            >
+              Top Up
+            </Button>
+          </form>
         </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '32px',
-          }}
-        >
-        </div>
-      </Container>
-    </ThemeProvider>
+      </Box>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: '32px',
+        }}
+      >
+      </div>
+    </Container>
   );
 }
