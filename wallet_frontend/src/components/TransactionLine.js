@@ -76,7 +76,7 @@ function TransactionLine(props) {
                             <b>+{props.transaction.receiver_amount}</b>
                         }
                         {txnType() === 'sender' &&
-                            <b>-{props.transaction.amount}</b>
+                            <b>-{props.transaction.sender_amount}</b>
                         }
                     </Typography>
                 </Box>
