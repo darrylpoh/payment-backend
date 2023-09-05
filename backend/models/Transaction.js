@@ -40,6 +40,10 @@ const Transaction = sequelize.define('Transaction', {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },
+    sender_amount: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+    },
     is_top_up: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
