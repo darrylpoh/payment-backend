@@ -14,7 +14,9 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Logo from '../assets/tiktokLogo.png';
-import QR from '../assets/qr.png';
+import QR from '../assets/qr.jpg';
+import { Card, CardContent } from '@mui/material';
+
 
 
 function StatusComponent({ open, onClose }) {
@@ -33,7 +35,7 @@ function StatusComponent({ open, onClose }) {
           color="secondary"
           onClick={() => handleTabChange('chat')}
         >
-          Chat History
+          Latest Messages
         </Button>
         <Button
           variant={selectedTab === 'qr' ? 'contained' : 'outlined'}
@@ -48,7 +50,39 @@ function StatusComponent({ open, onClose }) {
       <DialogContent>
         {selectedTab === 'chat' && (
           <div>
-            <p>Chat history</p>
+                  <Box display={"flex"} flexDirection={"column"}>
+        <Box marginX={2} paddingY={2} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
+                <Box display={'flex'}>
+                    <Box flexGrow={1} marginTop={1}>
+                        <Typography variant='body2'>@John213: Are you near Block 21?</Typography>
+                    </Box>
+                    <Box marginRight={2} marginY={"auto"}>
+                    </Box>
+                </Box>
+        </Box>
+      </Box>
+      <Box display={"flex"} flexDirection={"column"}>
+        <Box marginX={2} paddingY={2} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
+                <Box display={'flex'}>
+                    <Box flexGrow={1} marginTop={1}>
+                        <Typography variant='body2'>@Bernard7000: Hi are you still looking to exchange?</Typography>
+                    </Box>
+                    <Box marginRight={2} marginY={"auto"}>
+                    </Box>
+                </Box>
+        </Box>
+      </Box>
+      <Box display={"flex"} flexDirection={"column"}>
+        <Box marginX={2} paddingY={2} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
+                <Box display={'flex'}>
+                    <Box flexGrow={1} marginTop={1}>
+                        <Typography variant='body2'>@tina54: I have it!</Typography>
+                    </Box>
+                    <Box marginRight={2} marginY={"auto"}>
+                    </Box>
+                </Box>
+        </Box>
+      </Box>
           </div>
         )}
         {selectedTab === 'qr' && (
@@ -72,7 +106,64 @@ export default function Atm() {
   const [currency, setCurrency] = useState('SGD');
   const [recipient, setRecipient] = useState('');
   const [pendingRequests, setPendingRequests] = useState([
-    // TODO parse through db for list of recipients
+    {
+      recipient: 'Jowett',
+      amount: '54',
+      currency: 'SGD',
+      isCurrentUserRequest: false,
+    },
+    {
+      recipient: 'Wei Bin',
+      amount: '9',
+      currency: 'USD',
+      isCurrentUserRequest: false,
+    },
+    {
+      recipient: 'Bernice',
+      amount: '2',
+      currency: 'JPY',
+      isCurrentUserRequest: false,
+    },
+    {
+      recipient: 'Yee Sen',
+      amount: '2',
+      currency: 'SGD',
+      isCurrentUserRequest: false,
+    },
+    {
+      recipient: 'Darryl',
+      amount: '99',
+      currency: 'SGD',
+      isCurrentUserRequest: false,
+    },
+  ]);
+
+  function Atmline(props) {
+
+    return (
+      <Box display={"flex"} flexDirection={"column"}>
+        <Box marginX={2} paddingY={2} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
+                <Box display={'flex'}>
+                    <Box flexGrow={1} marginTop={1} marginRight={20}>
+                        <Typography variant='body2'>{props.request.recipient}: {props.request.currency} {props.request.amount}</Typography>
+                    </Box>
+                    <Box marginRight={2} marginY={"auto"}>
+                      <Button
+                          variant="outlined"
+                          color="secondary"
+                          onClick={() => openChatDialog(props.request)}
+                          sx={{ mb: 1}}
+                        >
+                          CHAT
+                      </Button>
+                    </Box>
+                </Box>
+        </Box>
+      </Box>
+    );
+  }
+
+  const Atm = [
     {
       recipient: 'Jowett',
       amount: '5',
@@ -92,8 +183,8 @@ export default function Atm() {
       isCurrentUserRequest: false,
     },
     {
-      recipient: 'Yee Sen',
-      amount: '25',
+      recipient: 'YeeSen',
+      amount: '2',
       currency: 'SGD',
       isCurrentUserRequest: false,
     },
@@ -103,11 +194,12 @@ export default function Atm() {
       currency: 'SGD',
       isCurrentUserRequest: false,
     },
-  ]);
+  ]
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [openChat, setOpenChat] = useState(false);
   const [chatMessage, setChatMessage] = useState('');
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+  const [showTransferRequestLine, setShowTransferRequestLine] = useState(false);
 
   const handleAmountChange = (event) => {
     const inputValue = event.target.value;
@@ -131,6 +223,7 @@ export default function Atm() {
     setRecipient('');
     setAmount('');
     setCurrency('SGD');
+    setShowTransferRequestLine(true);
   };
 
   const openChatDialog = (request) => {
@@ -153,7 +246,7 @@ export default function Atm() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container marginY={'auto'} component="main" maxWidth="xs">
       <Box
         sx={{
           marginTop: '50px',
@@ -225,47 +318,54 @@ export default function Atm() {
         }}
       >
 
-        <Typography variant="h6">Your Transfer Requests:</Typography>
-        <ul>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+            marginTop: 0,
+            marginBottom: 0,
+          }}
+        >
+          {showTransferRequestLine && (
+            <Typography marginBottom={3} variant="h6">Your Transfer Requests:</Typography>
+          )}
           {pendingRequests
             .filter((request) => request.isCurrentUserRequest)
             .map((request, index) => (
-              <li key={index}>
-                You requested for: {request.amount} {request.currency}
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  sx={{ ml: 1 }}
-                  onClick={handleStatusButtonClick}
-                >
-                  Status
-                </Button>
-              </li>
-            ))}
-        </ul>
-
-        <Typography variant="h6">Transfer Requests Near You:</Typography>
-        <ul style={{ padding: '10px 0' }}>
-            {pendingRequests
-                .filter((request) => !request.isCurrentUserRequest)
-                .map((request, index) => (
-                <li key={index} style={{ margin: '10px 0' }}>
-                    {request.recipient}: {request.amount} {request.currency}
-                    <Button
+              <Card key={index} variant="outlined" sx={{ mt: 2, px: 8 }}>
+                <CardContent>
+                  <Typography variant="body1">
+                    You requested for: {request.amount} {request.currency}
+                  </Typography>
+                  <Button
                     variant="outlined"
                     color="secondary"
-                    onClick={() => openChatDialog(request)}
-                    sx={{ ml: 1 }}
-                    >
-                    Chat
-                    </Button>
-                </li>
-                ))}
-        </ul>
+                    sx={{ mt: 1 }}
+                    onClick={handleStatusButtonClick}
+                  >
+                    Status
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+        </Box>
 
+        <Typography marginTop={10} marginBottom={5} variant="h6">Transfer Requests Near You:</Typography>
+          <Card variant="outlined">
+              <Box justifyContent={"space-evenly"}>
+                  {Atm.map((request) => (
+                      <Atmline request={request}/>
+                  ))}
+              </Box>
+          </Card>
       </Box>
 
-      {/* Render the StatusComponent */}
+      <Box marginTop={20}>
+        
+      </Box>
+
       <StatusComponent open={statusDialogOpen} onClose={() => setStatusDialogOpen(false)} />
 
       {/* Chat Dialog */}
