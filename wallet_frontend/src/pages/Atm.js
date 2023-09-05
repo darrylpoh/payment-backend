@@ -344,7 +344,7 @@ export default function Atm() {
             marginBottom: 0,
           }}
         >
-          <Typography marginBottom={10} variant="h6">Your Transfer Requests:</Typography>
+          <Typography marginBottom={3} variant="h6">Your Transfer Requests:</Typography>
           {pendingRequests
             .filter((request) => request.isCurrentUserRequest)
             .map((request, index) => (
@@ -366,7 +366,7 @@ export default function Atm() {
             ))}
         </Box>
 
-        <Typography variant="h6">Transfer Requests Near You:</Typography>
+        <Typography marginTop={10} marginBottom={5} variant="h6">Transfer Requests Near You:</Typography>
           <Card variant="outlined">
               <Box justifyContent={"space-evenly"}>
                   {Atm.map((request) => (
