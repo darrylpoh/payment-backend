@@ -10,7 +10,7 @@ const Transaction = sequelize.define('Transaction', {
     },
     sender_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
     receiver_id: {
         type: DataTypes.INTEGER,
@@ -40,10 +40,13 @@ const Transaction = sequelize.define('Transaction', {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },
-    sender_amount: {
-        type: DataTypes.DECIMAL(10, 2),
+    is_top_up: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: false,
     },
+
+
 }, {
     sequelize,
     tableName: 'transactions',
