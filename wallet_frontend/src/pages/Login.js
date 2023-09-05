@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from '../assets/tiktokLogo.png';
-import { loginUser } from '../services/API';
 import { firebaseAuth } from '../services/firebase';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
 
