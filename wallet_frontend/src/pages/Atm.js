@@ -376,6 +376,10 @@ export default function Atm() {
           </Card>
       </Box>
 
+      <Box marginTop={20}>
+        
+      </Box>
+
       <StatusComponent open={statusDialogOpen} onClose={() => setStatusDialogOpen(false)} />
 
       {/* Chat Dialog */}
