@@ -2,12 +2,13 @@ const { Op } = require('sequelize');
 const User = require('../models/User');
 const Transaction = require('../models/Transaction');
 const express = require('express');
+const verifyToken = require('../auth/auth');
 const router = express.Router();
 const { IsolationForest } = require('isolation-forest');
 
 
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken,async (req, res) => {
   // const userId = 'xIpAIQpOUjedRqprzfuLDNRS0pN2'; // Replace with the desired user ID later on
   const userId = req.userId;
   try {
