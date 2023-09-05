@@ -242,25 +242,6 @@ export default function Atm() {
     setStatusDialogOpen(true);
   };
 
-  const chatHistory = [
-    {
-      sender: 'You',
-      message: 'Hi there!',
-    },
-    {
-      sender: 'Jowett',
-      message: 'Hello!',
-    },
-    {
-      sender: 'You',
-      message: 'How are you doing?',
-    },
-    {
-      sender: 'Jowett',
-      message: 'Im good, thanks for asking!',
-    },
-  ];
-
   return (
     <Container marginY={'auto'} component="main" maxWidth="xs">
       <Box
