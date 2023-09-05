@@ -53,7 +53,7 @@ function StatusComponent({ open, onClose }) {
         <Box marginX={2} paddingY={2} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
                 <Box display={'flex'}>
                     <Box flexGrow={1} marginTop={1}>
-                        <Typography variant='body2'>John: Are you near Block 21?</Typography>
+                        <Typography variant='body2'>@John213: Are you near Block 21?</Typography>
                     </Box>
                     <Box marginRight={2} marginY={"auto"}>
                     </Box>
@@ -64,7 +64,7 @@ function StatusComponent({ open, onClose }) {
         <Box marginX={2} paddingY={2} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
                 <Box display={'flex'}>
                     <Box flexGrow={1} marginTop={1}>
-                        <Typography variant='body2'>Bernard: Hi are you still looking to exchange?</Typography>
+                        <Typography variant='body2'>@Bernard7000: Hi are you still looking to exchange?</Typography>
                     </Box>
                     <Box marginRight={2} marginY={"auto"}>
                     </Box>
@@ -75,7 +75,7 @@ function StatusComponent({ open, onClose }) {
         <Box marginX={2} paddingY={2} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
                 <Box display={'flex'}>
                     <Box flexGrow={1} marginTop={1}>
-                        <Typography variant='body2'>Tina: I have it!</Typography>
+                        <Typography variant='body2'>@tina54: I have it!</Typography>
                     </Box>
                     <Box marginRight={2} marginY={"auto"}>
                     </Box>
