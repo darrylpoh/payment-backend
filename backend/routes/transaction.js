@@ -1,4 +1,6 @@
-const { Op } = require('sequelize');
+const {
+  Op
+} = require('sequelize');
 const User = require('../models/User');
 const Transaction = require('../models/Transaction');
 const express = require('express');
@@ -24,8 +26,28 @@ router.get('/history', verifyToken, async (req, res) => {
         ['transaction_date', 'DESC'], // Sort by transaction_date in descending order
       ],
     });
+    // get sender and receiver info
+    const historyWithUserInfo = await Promise.all(history.map(async (transaction) => {
+      const senderInfo = await User.findOne({
+        where: {
+          user_id: transaction.sender_id
+        }
+      });
+      const receiverInfo = await User.findOne({
+        where: {
+          user_id: transaction.receiver_id
+        }
+      });
+      return {
+        ...transaction.toJSON(),
+        senderInfo: senderInfo ? senderInfo.toJSON() : null, // Include sender info
+        receiverInfo: receiverInfo ? receiverInfo.toJSON() : null, // Include receiver info
+      }
+    }));
+
+
     res.json({
-      data: history,
+      data: historyWithUserInfo,
       "error": false,
       "message": "History fetched successfully"
     })
