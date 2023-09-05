@@ -24,11 +24,12 @@ export default function Login() {
     signInWithEmailAndPassword(firebaseAuth, loginData.email, loginData.password)
         .then((userCredential) => {
             // Signed in
-            const user = userCredential.user.accessToken;
+            const user = userCredential.user;
             // navigate("/home")
             console.log(user);
-            window.localStorage.setItem('authtoken', user)
-            window.location.href = "/LoginOTP"
+            window.localStorage.setItem('authtoken', user.accessToken)
+            window.localStorage.setItem('userId', user.uid)
+            // window.location.href = "/LoginOTP"
         })
         .catch((error) => {
             const errorCode = error.code;
