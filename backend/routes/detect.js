@@ -5,26 +5,31 @@ const express = require('express');
 const router = express.Router();
 const { IsolationForest } = require('isolation-forest');
 
-// Auth is not done yet
+
 
 router.get('/', async (req, res) => {
-  const userId = 'xIpAIQpOUjedRqprzfuLDNRS0pN2'; // Replace with the desired user ID later on
-
+  // const userId = 'xIpAIQpOUjedRqprzfuLDNRS0pN2'; // Replace with the desired user ID later on
+  const userId = req.userId;
   try {
 
     // only USD_amt will be considered to ensure consistency when detecting anomaly
 
     const history = await Transaction.findAll({
-      attributes: ['usd_amt', 'transaction_id'],
+      attributes: ['usd_amt', 'transaction_id', 'is_top_up'],
       where: {
-        [Op.or]: [{ sender_id: userId }],
+        [Op.and]: [{ sender_id: userId },
+
+          {
+            is_top_up: false
+          }
+          ,],
       },
+      
       order: [['transaction_date', 'ASC']],
     });
 
     // Extract the plain data from Sequelize instances
     const jsonData = history.map(transaction => transaction.get({ plain: true }));
-
 
     // My for loop here calculates the last K=5 transactions
 
@@ -51,9 +56,8 @@ for (let i = 0; i < numPoints; i++) {
   data.push([usdAmtValues[i], averageValues[i]]);
 }
 
-// Initialize Isolation Forest
+// Initialize Isolation Forest. No random seeed available as it is not supported.
 const forest = new IsolationForest();
-
 forest.fit(data);
 console.log(forest.scores())
 var score= forest.scores().at(-1)
