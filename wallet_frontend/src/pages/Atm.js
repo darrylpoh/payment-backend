@@ -198,6 +198,7 @@ export default function Atm() {
   const [openChat, setOpenChat] = useState(false);
   const [chatMessage, setChatMessage] = useState('');
   const [statusDialogOpen, setStatusDialogOpen] = useState(false);
+  const [showTransferRequestLine, setShowTransferRequestLine] = useState(false);
 
   const handleAmountChange = (event) => {
     const inputValue = event.target.value;
@@ -221,6 +222,7 @@ export default function Atm() {
     setRecipient('');
     setAmount('');
     setCurrency('SGD');
+    setShowTransferRequestLine(true);
   };
 
   const openChatDialog = (request) => {
@@ -325,7 +327,9 @@ export default function Atm() {
             marginBottom: 0,
           }}
         >
-          <Typography marginBottom={3} variant="h6">Your Transfer Requests:</Typography>
+          {showTransferRequestLine && (
+            <Typography marginBottom={3} variant="h6">Your Transfer Requests:</Typography>
+          )}
           {pendingRequests
             .filter((request) => request.isCurrentUserRequest)
             .map((request, index) => (
