@@ -15,7 +15,7 @@ export default function History() {
     {"transactionId": "T005", "username": "username3", "fullName": "Wei Bin","amount":  12.40, "date": "2023-09-02", "status": "success"},
   ]
 
-  const [transactions, setTxn] = useState(transactionHardcode); 
+  const [transactions, setTxn] = useState([]); 
   const [transactionsCleaned, setTxnCleaned] = useState({}); 
   const [txnMonths, setTxnMonths] = useState([]); 
   const [cashFlowFilter, setCashFlowFilter] = useState('all'); 
@@ -66,12 +66,13 @@ export default function History() {
     var transactionsMonthTemp = []
     // TODO: need to filter away transactions where user is not sender and not recipient 
     for (const txn of transactions) { 
+      console.log(txn)
       if (cashFlowFilter !== "all") { 
         if ((cashFlowFilter === "in" && txn.amount < 0) || (cashFlowFilter === "out" && txn.amount > 0)) { 
           continue
         }
       }
-      var monthYear = txn.date.slice(0, -3);
+      var monthYear = txn.transaction_date.split("T")[0].slice(0, -3);
       if (!transactionsMonthTemp.includes(monthYear)) {
         transactionsMonthTemp.push(monthYear)
       }
@@ -113,7 +114,10 @@ export default function History() {
             <Box marginBottom={4}>
               <Typography marginTop={2} variant='h6' color='primary.main' display={'block'}>{monthMap[monthYear.split("-")[1]] + " " + monthYear.split("-")[0]}</Typography>
               {transactionsCleaned[monthYear].map((transaction) => (
-                <TransactionLine transaction={transaction}/>
+                <TransactionLine 
+                  transaction={transaction} 
+                  date={transaction.transaction_date.split("T")[0]}
+                />
               ))}
             </Box>
         ))}
