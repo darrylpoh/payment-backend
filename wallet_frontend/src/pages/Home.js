@@ -1,4 +1,4 @@
-import React from 'react';
+import { React, useEffect, useState } from 'react';
 import { Button, Link, Typography, Box, Card } from '@mui/material';
 import AddCardIcon from '@mui/icons-material/AddCard';
 import PaidIcon from '@mui/icons-material/Paid';
@@ -7,6 +7,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ContactlessIcon from '@mui/icons-material/Contactless';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import TransactionLine from '../components/TransactionLine';
+import { getAllTransactions, getWalletByUser } from '../services/API';
 
 const features = [
     [<AddCardIcon fontSize='large' color='secondary' />, 'Top Up'], 
@@ -21,19 +22,51 @@ const recipients = [
     ["username3", "Wei Bin"]
 ]
 
-const transactionsHardcode = [ 
-    {"transactionId": "T004", "username": "username2", "fullName": "Darryl", "amount": -1.20, "date": "2023-08-01", "status": "success"},
-    {"transactionId": "T003", "username": "username1", "fullName": "Bernice","amount":  -6.50, "date": "2023-09-02", "status": "success"},
-    {"transactionId": "T002", "username": "username1", "fullName": "Bernice","amount":  8.00, "date": "2023-09-01", "status": "failed"},
-    {"transactionId": "T001", "username": "username3", "fullName": "Wei Bin","amount":  -3.20, "date": "2023-08-03", "status": "failed"},
-    {"transactionId": "T005", "username": "username3", "fullName": "Wei Bin","amount":  12.40, "date": "2023-09-02", "status": "success"},
-  ]
-
-const transactions = []
-
-
 
 export default function Home() {
+    const [transactions, setTxn] = useState([]); 
+    const [balance, setBalance] = useState(""); 
+
+    useEffect(() => {
+        getAllTransactions(window.localStorage.getItem('authtoken'))
+          .then(response => { 
+            console.log(response)
+            // response.data.sort((a, b) => {
+            //     // Convert the date strings to Date objects for comparison
+            //     const dateA = new Date(a.date);
+            //     const dateB = new Date(b.date);
+            
+            //     // Compare the dates in descending order (latest to earliest)
+            //     return dateB - dateA;
+            // });
+            if (response.data.length <= 5) {
+                setTxn(response.data); // If the array length is already 5 or less, return it as is
+            } else {
+                setTxn(response.data.slice(0, 5)); // Slice the array to the first 5 elements
+            }
+          })
+          .catch(error => { 
+            console.log(error.message)
+          })
+        getWalletByUser(window.localStorage.getItem('authtoken'))
+          .then(response => { 
+            console.log(response)
+            setBalance(response.data.balance)
+          })
+          .catch(error => {
+            console.log(error.message)
+          })
+      }, [])
+
+  function getCurrency() { 
+    const userDetailsJSON = window.localStorage.getItem("userDetails");
+    if (userDetailsJSON) {
+        const userDetails = JSON.parse(userDetailsJSON);
+        return userDetails.default_currency
+    }
+    return ""
+  }
+
   return (
     <Box display={"flex"} flexDirection={"column"} paddingBottom={16}>
         <Box sx={{backgroundColor:"primary.main"}} height={200}/>
@@ -43,7 +76,7 @@ export default function Home() {
             fontWeight: 'bold', // Adjust font weight as needed
         }} marginLeft={2}>
             <Typography variant='body2' color={'white.main'}>Account balance:</Typography>
-            <Typography variant='h3' color={'white.main'}>$23.10</Typography> {/* TODO: HARDCODE */}
+            <Typography variant='h3' color={'white.main'}>{getCurrency()} {balance}</Typography> {/* TODO: HARDCODE */}
         </Box>
         <Box marginX={2} marginTop={2}>
             <Card variant="outlined">
@@ -95,7 +128,7 @@ export default function Home() {
                 <Box justifyContent={"space-evenly"}>
                     {/* TODO: HARDCODE */}
                     {transactions.map((transaction) => (
-                        <TransactionLine transaction={transaction}/>
+                        <TransactionLine transaction={transaction} date={transaction.transaction_date.split("T")[0]}/>
                     ))}
                     <Link href='/History'>
                         <Box marginY={1} display={"flex"} justifyContent={'center'}>

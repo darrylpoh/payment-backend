@@ -5,9 +5,18 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Snackbar from '@mui/material/Snackbar';
 import Logo from '../assets/tiktokLogo.png';
 import { getAuth, sendPasswordResetEmail  } from 'firebase/auth';
+
 export default function ChangePassword() {
+  const [toastOpen, setToastOpen] = React.useState(false);
+  const [transition, setTransition] = React.useState(undefined);
+
+  const handleToastClose = () => {
+    setToastOpen(false);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -18,7 +27,7 @@ export default function ChangePassword() {
 
   if (!emailRegex.test(email)) {
     // Invalid email format
-    console.log('Invalid email format');
+    setToastOpen(true);
     return;
   }
 
@@ -40,7 +49,7 @@ export default function ChangePassword() {
     <Container component="main" maxWidth="xs">
     <Box
         sx={{
-        marginTop: '45%',
+        marginTop: '55%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -72,6 +81,14 @@ export default function ChangePassword() {
                 Get Email
             </Button>
         </Box>
+        <Snackbar
+            open={toastOpen}
+            autoHideDuration={2000}
+            onClose={handleToastClose}
+            TransitionComponent={transition}
+            message="Invalid email format"
+            style={{ marginBottom: '120px' }}
+        />
     </Box>
     </Container>
   );
