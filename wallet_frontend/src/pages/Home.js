@@ -21,13 +21,15 @@ const recipients = [
     ["username3", "Wei Bin"]
 ]
 
-const transactions = [ 
+const transactionsHardcode = [ 
     {"transactionId": "T004", "username": "username2", "fullName": "Darryl", "amount": -1.20, "date": "2023-08-01", "status": "success"},
     {"transactionId": "T003", "username": "username1", "fullName": "Bernice","amount":  -6.50, "date": "2023-09-02", "status": "success"},
     {"transactionId": "T002", "username": "username1", "fullName": "Bernice","amount":  8.00, "date": "2023-09-01", "status": "failed"},
     {"transactionId": "T001", "username": "username3", "fullName": "Wei Bin","amount":  -3.20, "date": "2023-08-03", "status": "failed"},
     {"transactionId": "T005", "username": "username3", "fullName": "Wei Bin","amount":  12.40, "date": "2023-09-02", "status": "success"},
   ]
+
+const transactions = []
 
 
 
@@ -53,7 +55,7 @@ export default function Home() {
                     {features.map((feature) => (
                         <Box flexDirection='column' display='flex' alignItems={'center'} marginY={'auto'}>
                             <Button
-                                href={'/' + feature[1].replace(/ /g, '').replace('Home', '')} 
+                                href={window.localStorage.getItem('authtoken') ? '/' + feature[1].replace(/ /g, '').replace('Home', '') : '/Login'}
                                 key={feature[1].replace(/ /g, '')}
                             >
                                 {feature[0]}

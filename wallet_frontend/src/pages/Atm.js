@@ -18,6 +18,7 @@ import QR from '../assets/qr.jpg';
 import { Card, CardContent } from '@mui/material';
 
 
+
 function StatusComponent({ open, onClose }) {
   const [selectedTab, setSelectedTab] = useState('chat');
 

@@ -1,8 +1,9 @@
-import {React} from 'react';
+import {React, useEffect, useState} from 'react';
 import {Box, Avatar, Table, TableRow, TableCell, TableBody, Link} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Logo from '../assets/tiktokLogo.png';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { getUser } from '../services/API';
 
 const linkStyle = {
   textDecoration: 'none', // Remove underline
@@ -10,6 +11,27 @@ const linkStyle = {
 };
 
 export default function TransactionIndiv() {
+  const [name, setName] = useState("")
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+
+  function handleLogout() { 
+    window.localStorage.removeItem('authtoken');
+    window.location.href = '/Login'
+  }
+
+  useEffect(() => { 
+    getUser(window.localStorage.getItem("authtoken"))
+      .then(response => { 
+        console.log(response)
+        setName(response.data.full_name)
+        setUsername(response.data.username)
+        setEmail(response.data.email)
+      })
+      .catch(error => { 
+        console.log(error)
+      })
+  }, [])
 
   return (
     <Box
@@ -28,11 +50,11 @@ export default function TransactionIndiv() {
           <TableBody>
               <TableRow sx={{ '&:last-child td, &:last-child th': { borderBottom: '1px solid', borderColor: 'primary.light' } }}>
                 <TableCell component="th" scope="row"><b>Full name</b></TableCell>
-                <TableCell align="left">Bernice</TableCell>
+                <TableCell align="left">{name}</TableCell>
               </TableRow>
               <TableRow sx={{ '&:last-child td, &:last-child th': { borderBottom: '1px solid', borderColor: 'primary.light' } }}>
                 <TableCell component="th" scope="row"><b>Username</b></TableCell>
-                <TableCell align="left">username1</TableCell>
+                <TableCell align="left">{username}</TableCell>
               </TableRow>
               <TableRow sx={{ '&:last-child td, &:last-child th': { borderBottom: '1px solid', borderColor: 'primary.light' } }}>
                 <TableCell component="th" scope="row"><b>Password</b></TableCell>
@@ -40,7 +62,7 @@ export default function TransactionIndiv() {
               </TableRow>
               <TableRow sx={{ '&:last-child td, &:last-child th': { borderBottom: '1px solid', borderColor: 'primary.light' } }}>
                 <TableCell component="th" scope="row"><b>Email</b></TableCell>
-                <TableCell align="left">bernice.teo@smu.edu.sg</TableCell>
+                <TableCell align="left">{email}</TableCell>
               </TableRow>
           </TableBody>
         </Table>
@@ -52,14 +74,17 @@ export default function TransactionIndiv() {
                 </Box>
             </Box>
         </Link>
-        <Link style={linkStyle} href='/ChangeEmail'> {/* TODO: update href */}
+        {/* <Link style={linkStyle} href='/ChangeEmail'>
             <Box paddingY={1} display={"flex"} alignItems={'center'} justifyContent={'space-between'} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
                 <Typography variant="caption" color={"tertiary.main"} marginLeft={2}>Change OTP email</Typography>
                 <Box marginRight={2}>
                   <NavigateNextIcon marginY={"auto"} color={"tertiary"}/>
                 </Box>
             </Box>
-        </Link>
+        </Link> */}
+          <Box onClick={handleLogout} paddingY={1} display={"flex"} alignItems={'center'} justifyContent={'space-between'} sx={{ borderBottom: '1px solid', borderColor: 'primary.light' }}>
+              <Typography variant="caption" color={"tertiary.main"} marginLeft={2}>Logout</Typography>
+          </Box>
       </Box>
     </Box>
   );
