@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS wallets (
 -- Create the transactions table with receiver_amount and sender_amount columns
 CREATE TABLE IF NOT EXISTS transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
-    sender_id varchar(255) NOT NULL,
+    sender_id varchar(255) NULL,
     receiver_id varchar(255) NOT NULL,
     amount DECIMAL(10, 2) NOT NULL,
     currency VARCHAR(3) NOT NULL, -- Currency code (e.g., USD, EUR)
@@ -38,7 +38,8 @@ CREATE TABLE IF NOT EXISTS transactions (
     transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     usd_amt DECIMAL(10, 2) NOT NULL, -- Amount in USD
     receiver_amount DECIMAL(10, 2) NOT NULL, -- Amount received in receiver's default currency
-    sender_amount DECIMAL(10, 2) NOT NULL, -- Amount sent in sender's default currency
+    sender_amount DECIMAL(10, 2) NULL, -- Amount sent in sender's default currency
+    is_top_up BOOLEAN DEFAULT FALSE, -- TRUE if it's a top up transaction, FALSE otherwise
     FOREIGN KEY (sender_id) REFERENCES users (user_id),
     FOREIGN KEY (receiver_id) REFERENCES users (user_id)
 );
@@ -171,4 +172,16 @@ VALUES ('7f4TmxUfwzXkneJUj1GPZslLdA63', 'xIpAIQpOUjedRqprzfuLDNRS0pN2', 15.00, '
 -- User 4 sends $90 (USD) to User 1
 INSERT INTO transactions (sender_id, receiver_id, amount, currency, isCurrentUserRequest, usd_amt, receiver_amount, sender_amount)
 VALUES ('xIpAIQpOUjedRqprzfuLDNRS0pN2', 'U8VOJgTXv5Q4UGnGZ6EZ7d7qlxF3', 90.00, 'USD', TRUE, 90.00, 90.00, 90.00);
+
+-- User 4 top up
+INSERT INTO transactions (receiver_id, amount, currency, isCurrentUserRequest, usd_amt, receiver_amount, is_top_up)
+VALUES ('xIpAIQpOUjedRqprzfuLDNRS0pN2', 90.00, 'USD', TRUE, 90.00, 90.00, TRUE);
+
+-- User 1 top up
+INSERT INTO transactions (receiver_id, amount, currency, isCurrentUserRequest, usd_amt, receiver_amount, is_top_up)
+VALUES ('U8VOJgTXv5Q4UGnGZ6EZ7d7qlxF3', 90.00, 'USD', TRUE, 90.00, 90.00, TRUE);
+
+-- User 2 top up
+INSERT INTO transactions (receiver_id, amount, currency, isCurrentUserRequest, usd_amt, receiver_amount, is_top_up)
+VALUES ('iMKGMhyX3kfIQuLW8nEhDn4dbNV2', 90.00, 'USD', TRUE, 90.00, 90.00, TRUE);
 

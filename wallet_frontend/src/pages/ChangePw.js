@@ -6,25 +6,34 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from '../assets/tiktokLogo.png';
-
+import { getAuth, sendPasswordResetEmail  } from 'firebase/auth';
 export default function ChangePassword() {
   const handleSubmit = (event) => {
     event.preventDefault();
-    window.location.href = "/Profile"
-//     const data = new FormData(event.currentTarget);
-//     let loginData = {
-//       email: data.get('email'),
-//       password: data.get('password'),
-//     };
-//     generateToken(loginData) 
-//       .then(response => { 
-//         let token = response.data.token;
-//         setToken(token)
-//         window.location.href = '/';
-//       })
-//       .catch(error => { 
-//         console.log(error.message);
-//       })
+    const data = new FormData(event.currentTarget);
+    const email = data.get('email')
+
+    /// Regular expression for email validation
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+  if (!emailRegex.test(email)) {
+    // Invalid email format
+    console.log('Invalid email format');
+    return;
+  }
+
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email).then(() => {
+        // Password reset email sent!
+        // ..
+        console.log('Password reset email sent!');
+        }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
+        console.log(errorCode, errorMessage);
+        });
+    
   };
 
   return (
@@ -50,29 +59,9 @@ export default function ChangePassword() {
                 margin="normal"
                 required
                 fullWidth
-                name="password"
-                label="Old password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-            />
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="newpassword"
-                label="New password"
-                type="password"
-                id="newpassword"
-            />
-            <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="cfmpassword"
-                label="Confirm new password"
-                type="cfmpassword"
-                id="cfmpassword"
+                name="email"
+                label="Email Address"
+                id="email"
             />
             <Button
                 type="submit"
@@ -80,7 +69,7 @@ export default function ChangePassword() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
             >
-                Change password
+                Get Email
             </Button>
         </Box>
     </Box>

@@ -30,9 +30,33 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/stest', testRouter);
 app.use('/user', require('./routes/user'));
 app.use('/transaction', require('./routes/transaction'));
+app.use('/wallet', require('./routes/wallet'));
 app.use('/detect', require('./routes/detect'));
 app.get('/', (req, res) => {
     res.json("API server is running fine");
+});
+
+app.post('/checkout', async (req, res) => {
+    console.log(req.body)
+    const items = req.body.items;
+    let lineItems = [];
+    items.foreach((item)=> {
+        lineItems.push({
+            price: item.id,
+            quantity: item.quantity
+        })
+    });
+
+    const session = await stripe.checkout.sessions.create({
+        line_items: lineItems,
+        mode: 'payment',
+        success_url: "http://localhost:3000/success",
+    })
+
+    res.send(JSON.stringify({
+        url: session.url
+    }))
+
 });
 
 
