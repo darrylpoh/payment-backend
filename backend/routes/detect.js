@@ -7,7 +7,7 @@ const { IsolationForest } = require('isolation-forest');
 
 // Auth is not done yet
 
-router.get('/detect', async (req, res) => {
+router.get('/', async (req, res) => {
   const userId = 'xIpAIQpOUjedRqprzfuLDNRS0pN2'; // Replace with the desired user ID later on
 
   try {
