@@ -61,7 +61,7 @@ function Footer() {
             {pages.map((page) => (
               
               <Button
-                href={'/' + page[1].replace(/ /g, '').replace('Home', '')}
+                href={window.localStorage.getItem('authtoken') ? '/' + page[1].replace(/ /g, '').replace('Home', '') : '/Login'}
                 key={page[1].replace(/ /g, '')}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 0, mx: 0.45, color: 'white', display: 'block'}}

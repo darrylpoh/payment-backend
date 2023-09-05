@@ -3,14 +3,21 @@ import {Stack, Chip, Box} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import TransactionLine from '../components/TransactionLine';
-
+import { getAllTransactions } from '../services/API';
 
 
 export default function History() {
-  
+  const transactionHardcode = [ 
+    {"transactionId": "T004", "username": "username2", "fullName": "Darryl", "amount": -1.20, "date": "2023-08-01", "status": "success"},
+    {"transactionId": "T003", "username": "username1", "fullName": "Bernice","amount":  -6.50, "date": "2023-09-02", "status": "success"},
+    {"transactionId": "T002", "username": "username1", "fullName": "Bernice","amount":  8.00, "date": "2023-09-01", "status": "failed"},
+    {"transactionId": "T001", "username": "username3", "fullName": "Wei Bin","amount":  -3.20, "date": "2023-08-03", "status": "failed"},
+    {"transactionId": "T005", "username": "username3", "fullName": "Wei Bin","amount":  12.40, "date": "2023-09-02", "status": "success"},
+  ]
+
+  const [transactions, setTxn] = useState(transactionHardcode); 
   const [transactionsCleaned, setTxnCleaned] = useState({}); 
   const [txnMonths, setTxnMonths] = useState([]); 
-  const [statusFilter, setStatusFilter] = useState('all'); 
   const [cashFlowFilter, setCashFlowFilter] = useState('all'); 
   
   const monthMap = {
@@ -28,22 +35,25 @@ export default function History() {
     '12': 'December',
   };
 
-  const handleStatusFilter = (statusUpdate) => { 
-    setStatusFilter(statusUpdate);
-  }
-
   const handleCashFlowFilter = (statusUpdate) => { 
     setCashFlowFilter(statusUpdate);
   }
 
   useEffect(() => {
-    const transactions = [ 
-      {"transactionId": "T004", "username": "username2", "fullName": "Darryl", "amount": -1.20, "date": "2023-08-01", "status": "success"},
-      {"transactionId": "T003", "username": "username1", "fullName": "Bernice","amount":  -6.50, "date": "2023-09-02", "status": "success"},
-      {"transactionId": "T002", "username": "username1", "fullName": "Bernice","amount":  8.00, "date": "2023-09-01", "status": "failed"},
-      {"transactionId": "T001", "username": "username3", "fullName": "Wei Bin","amount":  -3.20, "date": "2023-08-03", "status": "failed"},
-      {"transactionId": "T005", "username": "username3", "fullName": "Wei Bin","amount":  12.40, "date": "2023-09-02", "status": "success"},
-    ]
+
+    console.log(window.localStorage.getItem('authtoken'))
+    getAllTransactions(window.localStorage.getItem('authtoken'))
+      .then(response => { 
+        console.log(response)
+        setTxn(response.data)
+      })
+      .catch(error => { 
+        console.log(error.message)
+      })
+    
+  }, [])
+
+  useEffect(() => { 
     transactions.sort((a, b) => {
       // Convert the date strings to Date objects for comparison
       const dateA = new Date(a.date);
@@ -55,10 +65,6 @@ export default function History() {
     var transactionsCleanedTemp = {}
     var transactionsMonthTemp = []
     for (const txn of transactions) { 
-      if (statusFilter !== "all" && txn.status !== statusFilter) { 
-        console.log(txn)
-        continue;
-      }
       if (cashFlowFilter !== "all") { 
         if ((cashFlowFilter === "in" && txn.amount < 0) || (cashFlowFilter === "out" && txn.amount > 0)) { 
           continue
@@ -83,7 +89,7 @@ export default function History() {
       return dateB - dateA; // Sort in descending order
     });
     setTxnMonths(transactionsMonthTemp)
-  }, [statusFilter, cashFlowFilter])
+  }, [cashFlowFilter, transactions])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -94,17 +100,11 @@ export default function History() {
 
         {/* <Typography marginTop={2} variant='h6' color='primary.main' display={'block'}>all Transactions</Typography> */}
         <Box sx={{ borderBottom: '1px solid', borderTop: '1px solid', borderColor: 'primary.light' }}>
-          <Stack direction="row" spacing={1} marginTop={2} alignItems="center">
+          <Stack direction="row" spacing={1} marginY={2} alignItems="center">
             <Typography variant="body2">Cash flow: </Typography>
             <Chip label="All" variant={cashFlowFilter === "all" ? 'filled' : 'outlined'} onClick={() => handleCashFlowFilter('all')} />
             <Chip label="Top up" variant={cashFlowFilter === "in" ? 'filled' : 'outlined'} onClick={() => handleCashFlowFilter('in')} />
             <Chip label="Payment" variant={cashFlowFilter === "out" ? 'filled' : 'outlined'} onClick={() => handleCashFlowFilter('out')} />
-          </Stack>
-          <Stack direction="row" spacing={1} marginY={2} alignItems="center">
-            <Typography variant="body2">Status: </Typography>
-            <Chip label="All" variant={statusFilter === "all" ? 'filled' : 'outlined'} onClick={() => handleStatusFilter('all')} />
-            <Chip label="Successful" variant={statusFilter === "success" ? 'filled' : 'outlined'} onClick={() => handleStatusFilter('success')} />
-            <Chip label="Failed" variant={statusFilter === "failed" ? 'filled' : 'outlined'} onClick={() => handleStatusFilter('failed')} />
           </Stack>
         </Box>
 

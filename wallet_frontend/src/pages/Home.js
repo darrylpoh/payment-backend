@@ -53,7 +53,7 @@ export default function Home() {
                     {features.map((feature) => (
                         <Box flexDirection='column' display='flex' alignItems={'center'} marginY={'auto'}>
                             <Button
-                                href={'/' + feature[1].replace(/ /g, '').replace('Home', '')} 
+                                href={window.localStorage.getItem('authtoken') ? '/' + feature[1].replace(/ /g, '').replace('Home', '') : '/Login'}
                                 key={feature[1].replace(/ /g, '')}
                             >
                                 {feature[0]}

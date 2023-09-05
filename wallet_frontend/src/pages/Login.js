@@ -7,25 +7,43 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from '../assets/tiktokLogo.png';
+import { firebaseAuth } from '../services/firebase';
+import {  signInWithEmailAndPassword   } from 'firebase/auth';
 
 export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
-    window.location.href = "/LoginOTP"
-//     const data = new FormData(event.currentTarget);
-//     let loginData = {
-//       email: data.get('email'),
-//       password: data.get('password'),
-//     };
-//     generateToken(loginData) 
-//       .then(response => { 
-//         let token = response.data.token;
-//         setToken(token)
-//         window.location.href = '/';
-//       })
-//       .catch(error => { 
-//         console.log(error.message);
-//       })
+    // window.location.href = "/LoginOTP"
+    const data = new FormData(event.currentTarget);
+    let loginData = {
+      email: data.get('email'),
+      password: data.get('password'),
+    };
+    // const response = loginUser(loginData)
+    // console.log(response)
+    signInWithEmailAndPassword(firebaseAuth, loginData.email, loginData.password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user.accessToken;
+            // navigate("/home")
+            console.log(user);
+            window.localStorage.setItem('authtoken', user)
+            window.location.href = "/LoginOTP"
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage)
+        });
+    // generateToken(loginData) 
+    //   .then(response => { 
+    //     let token = response.data.token;
+    //     setToken(token)
+    //     window.location.href = '/';
+    //   })
+    //   .catch(error => { 
+    //     console.log(error.message);
+    //   })
   };
 
   return (
@@ -49,10 +67,10 @@ export default function Login() {
                 margin="normal"
                 required
                 fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                autoComplete="username"
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
                 autoFocus
             />
             <TextField
