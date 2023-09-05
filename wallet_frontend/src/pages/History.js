@@ -39,6 +39,18 @@ export default function History() {
     setCashFlowFilter(statusUpdate);
   }
 
+  function txnType(transaction) { 
+    console.log(transaction)
+    const userId = window.localStorage.getItem("userId"); 
+    if (transaction.is_top_up) { 
+        return "topup"
+    } else if (userId === transaction.sender_id) { 
+        return "sender"
+    } else if (userId === transaction.receiver_id) { 
+        return "receiver"
+    } 
+  }
+
   useEffect(() => {
 
     console.log(window.localStorage.getItem('authtoken'))
@@ -68,7 +80,7 @@ export default function History() {
     for (const txn of transactions) { 
       console.log(txn)
       if (cashFlowFilter !== "all") { 
-        if ((cashFlowFilter === "in" && txn.amount < 0) || (cashFlowFilter === "out" && txn.amount > 0)) { 
+        if ((cashFlowFilter === "in" && txnType(txn) === "sender") || (cashFlowFilter === "out" && txnType(txn) !== "sender")) { 
           continue
         }
       }
@@ -105,8 +117,8 @@ export default function History() {
           <Stack direction="row" spacing={1} marginY={2} alignItems="center">
             <Typography variant="body2">Cash flow: </Typography>
             <Chip label="All" variant={cashFlowFilter === "all" ? 'filled' : 'outlined'} onClick={() => handleCashFlowFilter('all')} />
-            <Chip label="Top up" variant={cashFlowFilter === "in" ? 'filled' : 'outlined'} onClick={() => handleCashFlowFilter('in')} />
-            <Chip label="Payment" variant={cashFlowFilter === "out" ? 'filled' : 'outlined'} onClick={() => handleCashFlowFilter('out')} />
+            <Chip label="Money In" variant={cashFlowFilter === "in" ? 'filled' : 'outlined'} onClick={() => handleCashFlowFilter('in')} />
+            <Chip label="Money Out" variant={cashFlowFilter === "out" ? 'filled' : 'outlined'} onClick={() => handleCashFlowFilter('out')} />
           </Stack>
         </Box>
 
