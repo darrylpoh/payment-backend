@@ -64,6 +64,7 @@ export default function History() {
     });
     var transactionsCleanedTemp = {}
     var transactionsMonthTemp = []
+    // TODO: need to filter away transactions where user is not sender and not recipient 
     for (const txn of transactions) { 
       if (cashFlowFilter !== "all") { 
         if ((cashFlowFilter === "in" && txn.amount < 0) || (cashFlowFilter === "out" && txn.amount > 0)) { 
