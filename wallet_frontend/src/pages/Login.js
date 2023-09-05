@@ -95,6 +95,10 @@ export default function Login() {
         <Link href="/Register">
             <Typography variant="p">Register for a new account</Typography>
         </Link>
+        or
+        <Link href="/ChangePassword">
+            <Typography variant="p">Forget password</Typography>
+        </Link>
     </Box>
     </Container>
   );
