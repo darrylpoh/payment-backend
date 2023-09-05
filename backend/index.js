@@ -30,6 +30,7 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/stest', testRouter);
 app.use('/user', require('./routes/user'));
 app.use('/transaction', require('./routes/transaction'));
+app.use('/wallet', require('./routes/wallet'));
 app.use('/detect', require('./routes/detect'));
 app.get('/', (req, res) => {
     res.json("API server is running fine");
