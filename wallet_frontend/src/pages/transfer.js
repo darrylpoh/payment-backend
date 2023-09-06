@@ -54,6 +54,12 @@ export default function Transfer() {
     }
   }
 
+  useEffect(() => { 
+    if (window.localStorage.getItem("authtoken") === null) { 
+      window.location.href = '/Login'
+    }
+  }, [])
+
   return (
     <Container component="main" maxWidth="xs">
       <Box

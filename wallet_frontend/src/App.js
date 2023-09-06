@@ -33,7 +33,6 @@ function App() {
                 <Route exact path="/Atm" element={<Atm />} />
                 <Route exact path="/Profile" element={<Profile />} />
                 <Route exact path="/ChangePassword" element={<ChangePassword />} />
-                <Route exact path="/ChangeEmail" element={<ChangeEmail />} />
                 <Route exact path="/Suspicious" element={<Suspicious />} />
             </Routes>
             <Footer />

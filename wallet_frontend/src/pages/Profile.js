@@ -16,10 +16,15 @@ export default function TransactionIndiv() {
 
   function handleLogout() { 
     window.localStorage.removeItem('authtoken');
+    window.localStorage.removeItem('userDetails');
+    window.localStorage.removeItem('userId');
     window.location.href = '/Login'
   }
 
   useEffect(() => { 
+    if (window.localStorage.getItem("authtoken") === null) { 
+      window.location.href = '/Login'
+    }
     const userDetailsJSON = window.localStorage.getItem("userDetails");
     if (userDetailsJSON) {
       const userDetails = JSON.parse(userDetailsJSON);
