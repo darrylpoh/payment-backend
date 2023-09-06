@@ -40,7 +40,7 @@ app.post('/checkout', async (req, res) => {
     console.log(req.body)
     const items = req.body.items;
     let lineItems = [];
-    items.foreach((item)=> {
+    items.foreach((item) => {
         lineItems.push({
             price: item.id,
             quantity: item.quantity
@@ -60,8 +60,12 @@ app.post('/checkout', async (req, res) => {
 });
 
 
-app.listen(port, () => {
-    console.log(`Server started on http://localhost:${port}`);
-});
-
-// exports.api = functions.https.onRequest(app)
+if (process.env.GITHUB_ACTIONS === 'true') {
+    // Code to run on GitHub Actions
+    exports.api = functions.https.onRequest(app);
+} else {
+    // Code to run locally
+    app.listen(port, () => {
+        console.log(`Server started on http://localhost:${port}`);
+    });
+}
