@@ -7,12 +7,6 @@
 3. url for localhost is `http://127.0.0.1:5001/tech-series-regine-carry/us-central1/api/`
 
 ### To run server locally 
-- uncomment the following lines in `index.js`
-```
-// app.listen(port, () => {
-//     console.log(`Server started on http://localhost:${port}`);
-// });
-```
 1. run `npm run start` to start the server
 2. Docs for localhost is `https://docs.google.com/document/d/183sZqbtpXqbrqgz5rFoyRaijUKITZBdK9lQlhySiZ6o/edit`
 
