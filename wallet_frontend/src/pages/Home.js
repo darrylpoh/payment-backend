@@ -22,6 +22,9 @@ export default function Home() {
     const [suggRecipients, setSuggRecipients] = useState([]); 
 
     useEffect(() => {
+        if (window.localStorage.getItem("authtoken") === null) { 
+            window.location.href = '/Login'
+        }
         getAllTransactions(window.localStorage.getItem('authtoken'))
           .then(response => { 
             const transactions = response.data 
@@ -72,6 +75,9 @@ export default function Home() {
       }, [])
 
   function getCurrency() { 
+    if (window.localStorage.getItem("authtoken") === undefined) { 
+        window.location.href = '/Login'
+    }
     const userDetailsJSON = window.localStorage.getItem("userDetails");
     if (userDetailsJSON) {
         const userDetails = JSON.parse(userDetailsJSON);

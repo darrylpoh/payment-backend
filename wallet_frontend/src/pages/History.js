@@ -44,12 +44,19 @@ export default function History() {
   }
 
   useEffect(() => {
-
+    if (window.localStorage.getItem("authtoken") === null) { 
+      window.location.href = '/Login'
+    }
     console.log(window.localStorage.getItem('authtoken'))
     getAllTransactions(window.localStorage.getItem('authtoken'))
       .then(response => { 
         console.log(response)
-        setTxn(response.data)
+        if (response.response.data.message) { 
+          window.location.href = '/Login'
+        }
+        else { 
+          setTxn(response.data)
+        }
       })
       .catch(error => { 
         console.log(error.message)

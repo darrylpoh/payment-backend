@@ -22,6 +22,9 @@ export default function Susipicious() {
   }
 
   useEffect(() => {
+    if (window.localStorage.getItem("authtoken") === null) { 
+        window.location.href = '/Login'
+    }
     console.log(window.localStorage.getItem('authtoken'))
     getAllTransactions(window.localStorage.getItem('authtoken'))
       .then(response => { 

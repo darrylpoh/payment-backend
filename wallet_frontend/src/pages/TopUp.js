@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Button, TextField, Typography, Container, Box, Avatar, FormControl } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logo from '../assets/tiktokLogo.png';
@@ -30,6 +30,12 @@ export default function TopUp() {
       body: JSON.stringify({ quantity: amount, items: cartItems }),
     });
   };
+
+  useEffect(() => { 
+    if (window.localStorage.getItem("authtoken") === null) { 
+      window.location.href = '/Login'
+    }
+  })
 
   return (
     <Container component="main" maxWidth="xs">
