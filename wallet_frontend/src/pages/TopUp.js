@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Button, TextField, Typography, Container, Box, Avatar, FormControl } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Logo from '../assets/tiktokLogo.png';
@@ -13,7 +13,7 @@ const theme = createTheme({
 
 export default function TopUp() {
   const amountRef = useRef(null);
-  const [currency, setCurrency] = React.useState('SGD'); // Default currency is set to SGD
+  const [currency, setCurrency] = useState('SGD'); // Default currency is set to SGD
 
   const handleTopUp = async () => {
     const amount = amountRef.current.value;

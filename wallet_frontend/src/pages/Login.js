@@ -26,19 +26,20 @@ export default function Login() {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            // navigate("/home")
             console.log(user);
             window.localStorage.setItem('authtoken', user.accessToken)
             window.localStorage.setItem('userId', user.uid)
             getUser(user.accessToken) 
                 .then(response => { 
+                    console.log(response)
                     const userDetailsJSON = JSON.stringify(response.data);
                     window.localStorage.setItem("userDetails", userDetailsJSON)
+                    console.log(userDetailsJSON)
+                    // window.location.href = "/LoginOTP"
                 })
                 .catch(error => {
                     console.log(error.message)
                 })
-            window.location.href = "/LoginOTP"
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -46,22 +47,13 @@ export default function Login() {
             console.log(errorCode, errorMessage)
             setToastOpen(true);
         });
-    // generateToken(loginData) 
-    //   .then(response => { 
-    //     let token = response.data.token;
-    //     setToken(token)
-    //     window.location.href = '/';
-    //   })
-    //   .catch(error => { 
-    //     console.log(error.message);
-    //   })
   };
 
   return (
     <Container component="main" maxWidth="xs">
     <Box
         sx={{
-        marginTop: '50%',
+        marginTop: '55%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
