@@ -55,4 +55,35 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// get user detail by username
+router.get('/:username', async (req, res) => {
+    const username = req.params.username;
+    try {
+        const userInfo = await User.findOne({
+            attributes: ['username', 'email', 'full_name', 'default_currency'],
+            where: {
+                username: username
+            }
+        });
+        if (!userInfo) {
+            res.json({
+                data: {},
+                "error": false,
+                "message": "No User Found"
+            })
+        }
+        res.json({
+            data: userInfo,
+            "error": false,
+            "message": "User detail fetched successfully"
+        })
+    } catch (error) {
+        console.log(error);
+        res.json({
+            "error": true,
+            "message": error.message
+        })
+    }
+});
+
 module.exports = router;
