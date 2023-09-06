@@ -4,7 +4,10 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const testRouter = require('./routes/test');
 const functions = require("firebase-functions")
-
+const dotenv = require('dotenv');
+dotenv.config({
+    path: '.localenv'
+});
 const app = express();
 const port = 3000;
 app.use(cors())
@@ -60,12 +63,10 @@ app.post('/checkout', async (req, res) => {
 });
 
 
-if (process.env.GITHUB_ACTIONS === 'true') {
-    // Code to run on GitHub Actions
-    exports.api = functions.https.onRequest(app);
-} else {
-    // Code to run locally
+if (process.env.local === 'true') {
     app.listen(port, () => {
         console.log(`Server started on http://localhost:${port}`);
     });
+} else {
+    exports.api = functions.https.onRequest(app);
 }
