@@ -56,7 +56,7 @@ router.post('/register', async (req, res) => {
 });
 
 // get user detail by username
-router.get('/:username', async (req, res) => {
+router.get('/:username',verifyToken, async (req, res) => {
     const username = req.params.username;
     try {
         const userInfo = await User.findOne({
