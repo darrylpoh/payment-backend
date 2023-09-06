@@ -19,6 +19,7 @@ const pages = [
                 [<AccountCircleIcon fontSize='large' color='primary' />, 'Profile']
               ];
 
+const excludedPaths = ['/Login', '/LoginOTP', '/Register']
 
 function Footer() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -44,7 +45,19 @@ function Footer() {
     },
   }));
 
+  function removeNavbar() { 
+    const location = window.location.pathname; 
+    for (const excludedPath of excludedPaths) { 
+      if (location === excludedPath) { 
+        return false
+      }
+    }
+    return true
+  }
 
+  if (!removeNavbar()) { 
+    return null;
+  }
   return (
     <AppBar position="fixed" color="white" sx={{ top: 'auto', bottom: 0 }} height={90}>
       <Container maxWidth="xl">

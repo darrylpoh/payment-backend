@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { React, useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -12,8 +12,9 @@ import Container from '@mui/material/Container';
 import Logo from '../assets/tiktokLogo.png';
 
 export default function Transfer() {
-  const [amount, setAmount] = React.useState('');
-  const [currency, setCurrency] = React.useState('SGD'); // Default currency is set to SGD
+  const [amount, setAmount] = useState('');
+  const [currency, setCurrency] = useState('SGD'); // Default currency is set to SGD
+  const [recipient, setRecipient] = useState(''); // Default currency is set to SGD
 
   const exchangeRatesFromSGD = {
     'SGD': 1, 
@@ -29,6 +30,24 @@ export default function Transfer() {
       setAmount(inputValue);
     }
   };
+
+  function exchange(toCurrency) { 
+    const userDetailsJSON = window.localStorage.getItem("userDetails");
+    var fromCurrency
+    if (userDetailsJSON) {
+      const userDetails = JSON.parse(userDetailsJSON);
+      fromCurrency = userDetails.default_currency
+    }
+    const SGDtoFrom = exchangeRatesFromSGD[fromCurrency]
+    const SGDtoTo = exchangeRatesFromSGD[toCurrency]
+    const fromToTo = (SGDtoTo / SGDtoFrom).toFixed(2);
+    const statement = "1 " + fromCurrency + " = " + fromToTo + " " + toCurrency
+    return statement
+  }
+
+  useEffect(() => { 
+
+  })
 
   return (
     <Container component="main" maxWidth="xs">
@@ -48,7 +67,7 @@ export default function Transfer() {
           Make a transfer
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
-          <FormControl fullWidth margin='normal'>
+          {/* <FormControl fullWidth margin='normal'>
             <InputLabel id="recipient-label">Recipient</InputLabel>
             <Select
               labelId="recipient-label"
@@ -64,7 +83,16 @@ export default function Transfer() {
               <MenuItem value="Darryl">Darryl</MenuItem>
               <MenuItem value="Weibin">Weibin</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
+
+          <TextField
+            fullWidth
+            label="Recipient"
+            id="recipient"
+            name="recipient"
+            value={recipient}
+            margin="normal"
+          />
 
           <TextField
             fullWidth
@@ -90,7 +118,7 @@ export default function Transfer() {
           />
 
           <Box textAlign={'center'}>
-            <Typography variant='body1' color={'secondary.light'}>SGD 1 = SGD 1</Typography>
+            <Typography variant='body1' color={'secondary.light'}>{exchange(currency)}</Typography>
           </Box>
           <Button
             type="submit"

@@ -16,21 +16,15 @@ const features = [
     [<ReceiptLongIcon fontSize='large' color='secondary' />, 'History'],  
   ];
 
-const recipients = [ 
-    ["username1", "Bernice"],
-    ["username2", "Darryl"],
-    ["username3", "Wei Bin"]
-]
-
-
 export default function Home() {
     const [transactions, setTxn] = useState([]); 
     const [balance, setBalance] = useState(""); 
+    const [suggRecipients, setSuggRecipients] = useState([]); 
 
     useEffect(() => {
         getAllTransactions(window.localStorage.getItem('authtoken'))
           .then(response => { 
-            console.log(response)
+            const transactions = response.data 
             // response.data.sort((a, b) => {
             //     // Convert the date strings to Date objects for comparison
             //     const dateA = new Date(a.date);
@@ -39,18 +33,37 @@ export default function Home() {
             //     // Compare the dates in descending order (latest to earliest)
             //     return dateB - dateA;
             // });
-            if (response.data.length <= 5) {
-                setTxn(response.data); // If the array length is already 5 or less, return it as is
-            } else {
-                setTxn(response.data.slice(0, 5)); // Slice the array to the first 5 elements
+            setTxn(transactions.slice(0, 5)); // Slice the array to the first 5 elements
+
+            const userId = window.localStorage.getItem("userId")
+            var recipientsCount = {} 
+            var recipientIdToFullname = {}
+            for (const transaction of transactions) { 
+                if (transaction.sender_id === userId) { 
+                    var recipient = transaction.receiverInfo
+                    if (recipient.user_id in recipientsCount) { 
+                        recipientsCount[recipient.user_id] += 1 
+                    } else { 
+                        recipientsCount[recipient.user_id] = 1 
+                        recipientIdToFullname[recipient.user_id] = recipient.full_name
+                    }
+                }
             }
+
+            const entries = Object.entries(recipientsCount);
+            entries.sort((a, b) => b[1] - a[1]);
+
+            var top3recipients = []
+            for (const entry of entries.slice(0,3)) { 
+                top3recipients.push(recipientIdToFullname[entry[0]])
+            }
+            setSuggRecipients(top3recipients)
           })
           .catch(error => { 
             console.log(error.message)
           })
         getWalletByUser(window.localStorage.getItem('authtoken'))
           .then(response => { 
-            console.log(response)
             setBalance(response.data.balance)
           })
           .catch(error => {
@@ -108,7 +121,7 @@ export default function Home() {
                     height={120}
                 >
                     {/* TODO: HARDCODE */}
-                    {recipients.map((recipient) => (
+                    {suggRecipients.map((recipient) => (
                         <Box flexDirection='column' display='flex' alignItems={'center'} marginY={'auto'}>
                             <Button
                                 href={'/' + recipient[0].replace(/ /g, '').replace('Home', '')} // TODO: CHANGE THE HREF LINK 
@@ -116,7 +129,7 @@ export default function Home() {
                             >
                                 <AccountCircleIcon fontSize='large' color='tertiary'/>
                             </Button>
-                            <Typography variant='caption' color='tertiary.main' display={'block'}>{recipient[1]}</Typography>
+                            <Typography variant='caption' color='tertiary.main' display={'block'}>{recipient}</Typography>
                         </Box>
                     ))}
                 </Box>

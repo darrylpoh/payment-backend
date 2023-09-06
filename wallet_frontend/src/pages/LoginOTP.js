@@ -36,7 +36,7 @@ export default function LoginOTP() {
     <Container component="main" maxWidth="xs">
     <Box
         sx={{
-        marginTop: '50%',
+        marginTop: '55%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

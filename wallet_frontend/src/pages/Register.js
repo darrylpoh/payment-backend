@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Avatar, Button, TextField, Link, Box, Typography, Container, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Avatar, Button, TextField, Link, Box, Typography, Container, FormControl, InputLabel, Select, MenuItem, Snackbar } from '@mui/material';
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -7,42 +7,69 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import Logo from '../assets/tiktokLogo.png';
 import { createUser } from '../services/API';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { firebaseAuth } from '../services/firebase';
 
 export default function Register() {
 
   const [dob, setDob] = React.useState(dayjs('2000-01-01'));
   const [currency, setCurrency] = React.useState('SGD');
+  const [toastText, setToastText] = React.useState("");
+  const [toastOpen, setToastOpen] = React.useState(false);
+
+  const handleToastClose = () => {
+    setToastOpen(false);
+  };
 
   const handleCurrencyChange = (event) => {
     setCurrency(event.target.value);
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
     
     const data = new FormData(event.currentTarget);
-    if (data.get('password') === data.get('cfmpassword')) { 
-        let regData = {
-            username: data.get('username'),
-            email: data.get('email'),
-            password: data.get('password'),
-            full_name: data.get('name'),
-            date_of_birth: data.get('dob'),
-            phone_number: data.get('phonenumber'),
-            default_currency: data.get('currency'),
-          };
-        console.log(regData);
-        createUser(regData) 
-          .then(response => { 
-            console.log(response)
-            window.location.href = '/Login'
-          })
-          .catch(error => { 
-            console.log(error.message)
-          })
+    if (data.get('password') === "" || data.get('cfmpassword') === "" || data.get('name') === "" || data.get('username') === "" || data.get('email') === "" || data.get('dob') === "") { 
+        setToastText("Please fill in required fields")
+        setToastOpen(true);
     } else { 
-
+        if (data.get('password') === data.get('cfmpassword')) { 
+            let regData = {
+                username: data.get('username'),
+                email: data.get('email'),
+                password: data.get('password'),
+                full_name: data.get('name'),
+                date_of_birth: data.get('dob'),
+                phone_number: data.get('phonenumber'),
+                default_currency: data.get('currency'),
+              };
+            console.log(regData);
+    
+            createUserWithEmailAndPassword(firebaseAuth, data.get('email'), data.get('password'))
+              .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user);
+                createUser(regData) 
+                    .then(response => { 
+                        console.log(response)
+                        // window.location.href = '/Login'
+                    })
+                    .catch(error => { 
+                        console.log(error.message)
+                    })
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+                setToastText("Email is in use")
+                setToastOpen(true);
+              });
+        } else { 
+            setToastText("Passwords do not match")
+            setToastOpen(true);
+        }
     }
   };
 
@@ -54,7 +81,7 @@ export default function Register() {
         flexDirection: 'column',
         alignItems: 'center',
         }}
-        paddingBottom={16}
+        paddingBottom={12}
         marginTop={10}
     >
         <Avatar sx={{ m: 1, bgcolor: 'primary.main', color: 'black' }}>
@@ -172,6 +199,7 @@ export default function Register() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                color="secondary"
             >
                 Sign up
             </Button>
@@ -179,6 +207,13 @@ export default function Register() {
         <Link href="/Login">
             <Typography variant="p">Login to existing account</Typography>
         </Link>
+        <Snackbar
+            open={toastOpen}
+            autoHideDuration={2000}
+            onClose={handleToastClose}
+            message={toastText}
+            style={{ marginBottom: '120px' }}
+        />
     </Box>
     </Container>
   );
