@@ -13,8 +13,9 @@ import Logo from '../assets/tiktokLogo.png';
 
 export default function Transfer() {
   const [amount, setAmount] = useState('');
-  const [currency, setCurrency] = useState('SGD'); // Default currency is set to SGD
-  const [recipient, setRecipient] = useState(''); // Default currency is set to SGD
+  const [currency, setCurrency] = useState('SGD'); 
+  const [recipient, setRecipient] = useState(''); 
+  const [recipientCheck, setRecipientCheck] = useState(false); 
 
   const exchangeRatesFromSGD = {
     'SGD': 1, 
@@ -45,9 +46,13 @@ export default function Transfer() {
     return statement
   }
 
-  useEffect(() => { 
-
-  })
+  function checkRecipient() { 
+    // TODO: call the API that returns a list of all usernames 
+    var validUsername = true; 
+    if (validUsername) { 
+      setRecipientCheck(true); 
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -94,64 +99,69 @@ export default function Transfer() {
             margin="normal"
           />
 
-          <TextField
-            fullWidth
-            label="Currency"
-            id="currency"
-            name="currency"
-            value={currency}
-            margin="normal"
-            disabled
-          />
+          {!recipientCheck &&
+            <Button fullWidth color='secondary' variant='contained' onClick={checkRecipient} sx={{ mt: 3, mb: 2,}}>
+              Confirm Recipient
+            </Button>
+          }
 
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="amount"
-            label="Amount"
-            type="number"
-            id="amount"
-            value={amount}
-            onChange={handleAmountChange}
-            sx={{ width: '100%' }}
-          />
+          {recipientCheck && 
+            <Box>
+              <TextField
+                fullWidth
+                label="Currency"
+                id="currency"
+                name="currency"
+                value={currency}
+                margin="normal"
+                disabled
+              />
 
-          <Box textAlign={'center'}>
-            <Typography variant='body1' color={'secondary.light'}>{exchange(currency)}</Typography>
-          </Box>
-          <Button
-            type="submit"
-            fullWidth
-            color='secondary'
-            variant="contained"
-            sx={{ mt: 3, mb: 2,}}
-            onClick={(e) => {
-              e.preventDefault();
-              // Call backend to process payment/transfer later on
-            }}
-          >
-            Transfer
-          </Button>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="amount"
+                label="Amount"
+                type="number"
+                id="amount"
+                value={amount}
+                onChange={handleAmountChange}
+                sx={{ width: '100%' }}
+              />
+
+              <Box textAlign={'center'}>
+                <Typography variant='body1' color={'secondary.light'}>{exchange(currency)}</Typography>
+              </Box>
+              <Button
+                type="submit"
+                fullWidth
+                color='secondary'
+                variant="contained"
+                sx={{ mt: 3, mb: 2,}}
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Call backend to process payment/transfer later on
+                }}
+              >
+                Transfer
+              </Button>
+            </Box>
+          }
         </Box>
       </Box>
 
       <Box
-  sx={{
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    marginTop: 0, 
-    marginBottom:0
-  }}
->
-
-
-
-</Box>
-
-
-    </Container>
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          marginTop: 0, 
+          marginBottom:0
+        }}
+      >
+    </Box>
+  </Container>
   );
 }

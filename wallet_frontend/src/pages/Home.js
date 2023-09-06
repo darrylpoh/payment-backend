@@ -89,7 +89,7 @@ export default function Home() {
             fontWeight: 'bold', // Adjust font weight as needed
         }} marginLeft={2}>
             <Typography variant='body2' color={'white.main'}>Account balance:</Typography>
-            <Typography variant='h3' color={'white.main'}>{getCurrency()} {balance}</Typography> {/* TODO: HARDCODE */}
+            <Typography variant='h3' color={'white.main'}>{getCurrency()} {balance}</Typography> 
         </Box>
         <Box marginX={2} marginTop={2}>
             <Card variant="outlined">
@@ -120,7 +120,6 @@ export default function Home() {
                     justifyContent={"space-around"}
                     height={120}
                 >
-                    {/* TODO: HARDCODE */}
                     {suggRecipients.map((recipient) => (
                         <Box flexDirection='column' display='flex' alignItems={'center'} marginY={'auto'}>
                             <Button
@@ -139,7 +138,6 @@ export default function Home() {
             <Typography variant='h6' color='primary.main' display={'block'}>Recent Transactions</Typography>
             <Card variant="outlined">
                 <Box justifyContent={"space-evenly"}>
-                    {/* TODO: HARDCODE */}
                     {transactions.map((transaction) => (
                         <TransactionLine transaction={transaction} date={transaction.transaction_date.split("T")[0]}/>
                     ))}
