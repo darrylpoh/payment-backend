@@ -3,7 +3,7 @@ import {Stack, Chip, Box} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import TransactionLine from '../components/TransactionLine';
-import { getAllTransactions } from '../services/API';
+import { getAllTransactions, getSuspiciousDashboard } from '../services/API';
 
 
 export default function Susipicious() {
@@ -22,9 +22,14 @@ export default function Susipicious() {
   }
 
   useEffect(() => {
-    if (window.localStorage.getItem("authtoken") === null) { 
-        window.location.href = '/Login'
-    }
+    getSuspiciousDashboard()
+        .then(response => { 
+            console.log(response.data)
+        })
+        .catch(error => { 
+            console.log(error.message)
+        })
+        
     console.log(window.localStorage.getItem('authtoken'))
     getAllTransactions(window.localStorage.getItem('authtoken'))
       .then(response => { 

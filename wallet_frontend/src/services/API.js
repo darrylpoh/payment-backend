@@ -28,6 +28,21 @@ export async function getUser(auth) {
     }
 }
 
+export async function validateUsername(auth, username) { 
+    let api_url = baseUrl + "/user/" + username; 
+    try { 
+        const response = await axios.get(api_url, { 
+            headers: {
+                'Authorization': 'Bearer ' + auth
+              }
+        }); 
+        console.log('response ', response); 
+        return response.data; 
+    } catch(error) { 
+        return error; 
+    }
+}
+
 export async function getAllTransactions(auth) { 
     let api_url = baseUrl + "/transaction/history";
     try { 
@@ -51,6 +66,17 @@ export async function getWalletByUser(auth) {
                 'Authorization': 'Bearer ' + auth
               }
         }); 
+        console.log('response ', response); 
+        return response.data; 
+    } catch(error) { 
+        return error; 
+    }
+}
+
+export async function getSuspiciousDashboard() { 
+    let api_url = baseUrl + '/detect/dashboard'; 
+    try { 
+        const response = await axios.get(api_url); 
         console.log('response ', response); 
         return response.data; 
     } catch(error) { 
