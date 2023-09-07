@@ -44,28 +44,15 @@ export default function Register() {
                 default_currency: data.get('currency'),
               };
             console.log(regData);
-    
-            createUserWithEmailAndPassword(firebaseAuth, data.get('email'), data.get('password'))
-              .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                console.log(user);
-                createUser(regData) 
-                    .then(response => { 
-                        console.log(response)
-                        // window.location.href = '/Login'
-                    })
-                    .catch(error => { 
-                        console.log(error.message)
-                    })
-              })
-              .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage)
-                setToastText("Email is in use")
-                setToastOpen(true);
-              });
+              
+            createUser(regData) 
+                .then(response => { 
+                    console.log(response)
+                    window.location.href = '/Login'
+                })
+                .catch(error => { 
+                    console.log(error.message)
+                })
         } else { 
             setToastText("Passwords do not match")
             setToastOpen(true);

@@ -84,6 +84,7 @@ export default function TopUp() {
                 inputRef={amountRef}
                 type="number"
                 margin="normal"
+                step="0.01"
               />
             </FormControl>
             <Button
