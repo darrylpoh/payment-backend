@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Wallet = require('../models/Wallet');
 const express = require('express');
 const router = express.Router();
 const admin = require('../config/firebaseConfig');
@@ -41,6 +42,9 @@ router.post('/register', async (req, res) => {
             phone_number: phone_number,
             default_currency: default_currency,
         });
+        const userWallet = await Wallet.create({
+            user_id: user.uid,
+        })
         res.json({
             data: userInfo,
             "error": false,

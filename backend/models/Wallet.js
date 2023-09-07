@@ -22,7 +22,7 @@ const Wallet = sequelize.define('Wallet', {
     },
     updated_at: {
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
     },
 }, {
     sequelize,

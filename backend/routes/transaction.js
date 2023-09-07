@@ -3,8 +3,10 @@ const {
 } = require('sequelize');
 const User = require('../models/User');
 const Transaction = require('../models/Transaction');
+const Wallet = require('../models/Wallet');
 const express = require('express');
 const verifyToken = require('../auth/auth');
+const { transaction } = require('../config/db');
 const router = express.Router();
 
 // get past transactions
@@ -60,5 +62,145 @@ router.get('/history', verifyToken, async (req, res) => {
   }
 });
 
+router.post('/transfer', verifyToken, async (req, res) => {
+  const userInfo = req.userInfo;
+  const user_id = userInfo.user_id;
+  const receiver_username = req.body.receiver;
+  const sender_amount = req.body.sender_amount;
+  const receiver_amount = req.body.receiver_amount;
+  try {
+    // Checking for Existance of User Wallet
+    const sender_wallet = await User.find({user_id: user_id}).exec();
+    if (!sender_wallet) {
+      res.status(404).json({
+        "error": true,
+        "message": "User Wallet Not Found!"
+      }).send();
+    }
+    // Checking if User has Sufficient Balance
+    if (sender_wallet.balance < sender_amount) {
+      res.status(400).json({
+        "error": true,
+        "message": "Insufficient Balance in Your Wallet!"
+      }).send();
+    }
+    // Checking for Existance of Receiver
+    const receiver = await User.find({username: receiver_username}).exec();
+    if (!receiver) {
+      res.status(404).json({
+        "error": true,
+        "message": "Receiver Not Found!"
+      }).send();
+    }
+    // Checking for Existance of Receiver Wallet
+    const receiver_wallet = await Wallet.find({user_id: receiver.user_id}).exec();
+    if (!receiver_wallet) {
+      res.status(404).json({
+        "error": true,
+        "message": "Receiver Wallet Not Found!"
+      }).send();
+    }
+    const transaction = new Transaction({
+      sender_id: user_id,
+      receiver_id: receiver.user_id,
+      amount: sender_amount,
+      currency: userInfo.default_currency,
+      isCurrentUserRequest: false,
+      usd_amt: 0.0,
+      receiver_amount: receiver_amount,
+      sender_amount: sender_amount
+    });
+    const transactionExecuted = await transaction.save();
+    if (transactionExecuted) {
+      sender_wallet.balance -= sender_amount;
+      receiver_wallet += receiver_amount;
+      await sender_wallet.save(function(err,result){
+        if (err){
+            console.status(400).log(err);
+            res.json({
+              "error": true,
+              "message": "Error with Sending"
+            }).send();
+        }
+    })
+      await receiver_wallet.save(function(err,result){
+        if (err){
+            console.status(400).log(err);
+            res.json({
+              "error": true,
+              "message": "Error with Receiving"
+            }).send();
+        }
+    })
+      res.status(200).json({
+        "Message": transaction.toJSON()
+      })
+    } else {
+      res.json({
+        "error": true,
+        "message": "Error with Transfer!"
+      })
+    }
+  } catch(error) {
+    console.log(error);
+    res.json({
+      "error": true,
+      "message": error.message
+    })
+  }
+});
+
+router.post('/topup', verifyToken, async (req, res) => {
+  const userInfo = req.userInfo;
+  const user_id = userInfo.user_id;
+  const topup_amount = req.body.topup_amount;
+  try {
+    // Checking for Existance of User Wallet
+    const user_wallet = await User.find({user_id: user_id}).exec();
+    if (!user_wallet) {
+      res.status(404).json({
+        "error": true,
+        "message": "User Wallet Not Found!"
+      }).send();
+    }
+    const transaction = new Transaction({
+      receiver_id: user_id,
+      amount: topup_amount,
+      currency: userInfo.default_currency,
+      isCurrentUserRequest: false,
+      usd_amt: 0.0,
+      receiver_amount: topup_amount,
+      sender_amount: topup_amount,
+      is_top_up: true
+    });
+    const transactionExecuted = await transaction.save();
+    if (transactionExecuted) {
+      user_wallet.balance += topup_amount;
+      await user_wallet.save(function(err,result){
+        if (err){
+            console.status(400).log(err);
+            res.json({
+              "error": true,
+              "message": "Error with Receiving"
+            }).send();
+        }
+    })
+      res.status(200).json({
+        "Message": transaction.toJSON()
+      })
+    } else {
+      res.json({
+        "error": true,
+        "message": "Error with Top Up!"
+      })
+    }
+  } catch(error) {
+    console.log(error);
+    res.json({
+      "error": true,
+      "message": error.message
+    })
+  }
+});
 
 module.exports = router;
