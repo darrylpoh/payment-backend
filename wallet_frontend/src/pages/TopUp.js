@@ -1,9 +1,7 @@
 
-import React, { useRef } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import React, { useRef, useState, useEffect } from 'react';
+import { Button, TextField, Typography, Container, Box, Avatar, FormControl } from '@mui/material';
+
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 
@@ -17,6 +15,9 @@ const theme = createTheme({
 
 export default function TopUp() {
   const amountRef = useRef(null);
+
+  const [currency, setCurrency] = useState('SGD'); // Default currency is set to SGD
+
 
   const handleTopUp = async () => {
     const amount = amountRef.current.value;
@@ -35,6 +36,12 @@ export default function TopUp() {
       window.location = url
     })
   };
+
+  useEffect(() => { 
+    if (window.localStorage.getItem("authtoken") === null) { 
+      window.location.href = '/Login'
+    }
+  })
 
   return (
     <ThemeProvider theme={theme}>

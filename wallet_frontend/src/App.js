@@ -1,4 +1,5 @@
-import React from "react";
+import { React } from "react";
+import { useLocation } from 'react-router-dom';
 import "./App.css";
 import Footer from "./components/Footer";
 // import ReactDOM from "react-dom/client";
@@ -14,6 +15,7 @@ import Profile from "./pages/Profile";
 import ChangePassword from "./pages/ChangePw";
 import ChangeEmail from "./pages/ChangeEmail";
 import Transfer from "./pages/transfer";
+import Suspicious from "./pages/Suspicious";
 import { createTheme, ThemeProvider } from "@mui/material";
 
 function App() {
@@ -31,7 +33,7 @@ function App() {
                 <Route exact path="/Atm" element={<Atm />} />
                 <Route exact path="/Profile" element={<Profile />} />
                 <Route exact path="/ChangePassword" element={<ChangePassword />} />
-                <Route exact path="/ChangeEmail" element={<ChangeEmail />} />
+                <Route exact path="/Suspicious" element={<Suspicious />} />
             </Routes>
             <Footer />
         </Router>

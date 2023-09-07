@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js",
-    "deploy": "firebase deploy --only functions:api",
-    "serve": "firebase emulators:start --only functions --inspect-functions"
+    "start": "npm run set-local && nodemon index.js",
+    "deploy": "npm run set-deploy && firebase deploy --only functions:api",
+    "serve": "firebase emulators:start --only functions --inspect-functions",
+    "set-local": "echo local=true > .localenv",
+    "set-deploy": "echo local=false > .localenv"
   },
   "repository": {
     "type": "git",

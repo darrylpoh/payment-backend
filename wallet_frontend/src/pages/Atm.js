@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -137,6 +137,12 @@ export default function Atm() {
       isCurrentUserRequest: false,
     },
   ]);
+
+  useEffect(() => { 
+    if (window.localStorage.getItem("authtoken") === null) { 
+      window.location.href = '/Login'
+    }
+  })
 
   function Atmline(props) {
 

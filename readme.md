@@ -10,7 +10,6 @@
 1. run `npm run start` to start the server
 2. Docs for localhost is `https://docs.google.com/document/d/183sZqbtpXqbrqgz5rFoyRaijUKITZBdK9lQlhySiZ6o/edit`
 
-
 ## Instructions to run the frontend codes
 1. run `npm install` if you haven't done so for backend
 2. To start the development server and run the web page locally, run `npm start`

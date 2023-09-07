@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { React, useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -12,8 +12,10 @@ import Container from '@mui/material/Container';
 import Logo from '../assets/tiktokLogo.png';
 
 export default function Transfer() {
-  const [amount, setAmount] = React.useState('');
-  const [currency, setCurrency] = React.useState('SGD'); // Default currency is set to SGD
+  const [amount, setAmount] = useState('');
+  const [currency, setCurrency] = useState('SGD'); 
+  const [recipient, setRecipient] = useState(''); 
+  const [recipientCheck, setRecipientCheck] = useState(false); 
 
   const exchangeRatesFromSGD = {
     'SGD': 1, 
@@ -29,6 +31,34 @@ export default function Transfer() {
       setAmount(inputValue);
     }
   };
+
+  function exchange(toCurrency) { 
+    const userDetailsJSON = window.localStorage.getItem("userDetails");
+    var fromCurrency
+    if (userDetailsJSON) {
+      const userDetails = JSON.parse(userDetailsJSON);
+      fromCurrency = userDetails.default_currency
+    }
+    const SGDtoFrom = exchangeRatesFromSGD[fromCurrency]
+    const SGDtoTo = exchangeRatesFromSGD[toCurrency]
+    const fromToTo = (SGDtoTo / SGDtoFrom).toFixed(2);
+    const statement = "1 " + fromCurrency + " = " + fromToTo + " " + toCurrency
+    return statement
+  }
+
+  function checkRecipient() { 
+    // TODO: call the API that returns a list of all usernames 
+    var validUsername = true; 
+    if (validUsername) { 
+      setRecipientCheck(true); 
+    }
+  }
+
+  useEffect(() => { 
+    if (window.localStorage.getItem("authtoken") === null) { 
+      window.location.href = '/Login'
+    }
+  }, [])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -48,7 +78,7 @@ export default function Transfer() {
           Make a transfer
         </Typography>
         <Box component="form" noValidate sx={{ mt: 1 }}>
-          <FormControl fullWidth margin='normal'>
+          {/* <FormControl fullWidth margin='normal'>
             <InputLabel id="recipient-label">Recipient</InputLabel>
             <Select
               labelId="recipient-label"
@@ -64,66 +94,80 @@ export default function Transfer() {
               <MenuItem value="Darryl">Darryl</MenuItem>
               <MenuItem value="Weibin">Weibin</MenuItem>
             </Select>
-          </FormControl>
+          </FormControl> */}
 
           <TextField
             fullWidth
-            label="Currency"
-            id="currency"
-            name="currency"
-            value={currency}
+            label="Recipient"
+            id="recipient"
+            name="recipient"
+            value={recipient}
             margin="normal"
-            disabled
           />
 
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="amount"
-            label="Amount"
-            type="number"
-            id="amount"
-            value={amount}
-            onChange={handleAmountChange}
-            sx={{ width: '100%' }}
-          />
+          {!recipientCheck &&
+            <Button fullWidth color='secondary' variant='contained' onClick={checkRecipient} sx={{ mt: 3, mb: 2,}}>
+              Confirm Recipient
+            </Button>
+          }
 
-          <Box textAlign={'center'}>
-            <Typography variant='body1' color={'secondary.light'}>SGD 1 = SGD 1</Typography>
-          </Box>
-          <Button
-            type="submit"
-            fullWidth
-            color='secondary'
-            variant="contained"
-            sx={{ mt: 3, mb: 2,}}
-            onClick={(e) => {
-              e.preventDefault();
-              // Call backend to process payment/transfer later on
-            }}
-          >
-            Transfer
-          </Button>
+          {recipientCheck && 
+            <Box>
+              <TextField
+                fullWidth
+                label="Currency"
+                id="currency"
+                name="currency"
+                value={currency}
+                margin="normal"
+                disabled
+              />
+
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="amount"
+                label="Amount"
+                type="number"
+                id="amount"
+                value={amount}
+                onChange={handleAmountChange}
+                sx={{ width: '100%' }}
+              />
+
+              <Box textAlign={'center'}>
+                <Typography variant='body1' color={'secondary.light'}>{exchange(currency)}</Typography>
+              </Box>
+              <Button
+                type="submit"
+                fullWidth
+                color='secondary'
+                variant="contained"
+                sx={{ mt: 3, mb: 2,}}
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Call backend to process payment/transfer later on
+                }}
+              >
+                Transfer
+              </Button>
+            </Box>
+          }
         </Box>
       </Box>
 
       <Box
-  sx={{
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-    marginTop: 0, 
-    marginBottom:0
-  }}
->
-
-
-
-</Box>
-
-
-    </Container>
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          textAlign: 'center',
+          marginTop: 0, 
+          marginBottom:0
+        }}
+      >
+    </Box>
+  </Container>
   );
 }

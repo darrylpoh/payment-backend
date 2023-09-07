@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const Wallet = require('../models/Wallet');
 const express = require('express');
 const router = express.Router();
 const admin = require('../config/firebaseConfig');
@@ -41,10 +42,44 @@ router.post('/register', async (req, res) => {
             phone_number: phone_number,
             default_currency: default_currency,
         });
+        const userWallet = await Wallet.create({
+            user_id: user.uid,
+        })
         res.json({
             data: userInfo,
             "error": false,
             "message": "User registered successfully"
+        })
+    } catch (error) {
+        console.log(error);
+        res.json({
+            "error": true,
+            "message": error.message
+        })
+    }
+});
+
+// get user detail by username
+router.get('/:username',verifyToken, async (req, res) => {
+    const username = req.params.username;
+    try {
+        const userInfo = await User.findOne({
+            attributes: ['username', 'email', 'full_name', 'default_currency'],
+            where: {
+                username: username
+            }
+        });
+        if (!userInfo) {
+            res.json({
+                data: {},
+                "error": false,
+                "message": "No User Found"
+            })
+        }
+        res.json({
+            data: userInfo,
+            "error": false,
+            "message": "User detail fetched successfully"
         })
     } catch (error) {
         console.log(error);

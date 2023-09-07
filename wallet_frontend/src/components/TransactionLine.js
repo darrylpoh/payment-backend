@@ -38,7 +38,10 @@ function TransactionLine(props) {
 
   function txnType() { 
     const userId = window.localStorage.getItem("userId"); 
-    if (props.transaction.is_top_up) { 
+    if (props.suspicious) { 
+        return "suspicious"
+    }
+    else if (props.transaction.is_top_up) { 
         return "topup"
     } else if (userId === props.transaction.sender_id) { 
         return "sender"
