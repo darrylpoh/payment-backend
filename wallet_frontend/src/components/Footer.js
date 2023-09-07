@@ -19,7 +19,7 @@ const pages = [
                 [<AccountCircleIcon fontSize='large' color='primary' />, 'Profile']
               ];
 
-const excludedPaths = ['/Login', '/LoginOTP', '/Register']
+const excludedPaths = ['/Login', '/LoginOTP', '/Register', '/Suspicious']
 
 function Footer() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
