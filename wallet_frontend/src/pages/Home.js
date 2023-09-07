@@ -66,8 +66,10 @@ export default function Home() {
             console.log(error.message)
             window.location.href = '/Login'
           })
+        console.log(window.localStorage.getItem('authtoken'))
         getWalletByUser(window.localStorage.getItem('authtoken'))
           .then(response => { 
+            console.log(response.data)
             setBalance(response.data.balance)
           })
           .catch(error => {
