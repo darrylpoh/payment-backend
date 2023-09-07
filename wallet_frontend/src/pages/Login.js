@@ -3,7 +3,7 @@ import { Avatar, Button, TextField, Link, Box, Typography, Container, Snackbar }
 import Logo from '../assets/tiktokLogo.png';
 import { firebaseAuth } from '../services/firebase';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
-import { getUser, requestOTP } from '../services/API';
+import { requestOTP } from '../services/API';
 
 export default function Login() {
     const [toastOpen, setToastOpen] = React.useState(false);
