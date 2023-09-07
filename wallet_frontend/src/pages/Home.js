@@ -64,6 +64,7 @@ export default function Home() {
           })
           .catch(error => { 
             console.log(error.message)
+            window.location.href = '/Login'
           })
         getWalletByUser(window.localStorage.getItem('authtoken'))
           .then(response => { 
@@ -126,6 +127,11 @@ export default function Home() {
                     justifyContent={"space-around"}
                     height={120}
                 >
+                    {suggRecipients.length === 0 && 
+                        <Box marginY={'auto'}>
+                            <Typography variant='p'>No suggested recipients</Typography>
+                        </Box>
+                    }
                     {suggRecipients.map((recipient) => (
                         <Box flexDirection='column' display='flex' alignItems={'center'} marginY={'auto'}>
                             <Button
@@ -144,15 +150,24 @@ export default function Home() {
             <Typography variant='h6' color='primary.main' display={'block'}>Recent Transactions</Typography>
             <Card variant="outlined">
                 <Box justifyContent={"space-evenly"}>
+                    {transactions.length === 0 && 
+                        <Box height={120} display={'flex'}>
+                            <Box margin={'auto'} textAlign={'center'}>
+                                <Typography variant='p' marginY={'auto'}>No transactions</Typography>
+                            </Box>
+                        </Box>
+                    }
                     {transactions.map((transaction) => (
                         <TransactionLine transaction={transaction} date={transaction.transaction_date.split("T")[0]}/>
                     ))}
-                    <Link href='/History'>
-                        <Box marginY={1} display={"flex"} justifyContent={'center'}>
-                            <Typography variant="p" color={"primary"}>See more</Typography>
-                            <NavigateNextIcon marginY={"auto"}/>
-                        </Box>
-                    </Link>
+                    {transactions.length !== 0 && 
+                        <Link href='/History'>
+                            <Box marginY={1} display={"flex"} justifyContent={'center'}>
+                                <Typography variant="p" color={"primary"}>See more</Typography>
+                                <NavigateNextIcon marginY={"auto"}/>
+                            </Box>
+                        </Link>
+                    }
                 </Box>
             </Card>
         </Box>

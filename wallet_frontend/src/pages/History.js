@@ -50,13 +50,7 @@ export default function History() {
     console.log(window.localStorage.getItem('authtoken'))
     getAllTransactions(window.localStorage.getItem('authtoken'))
       .then(response => { 
-        console.log(response)
-        if (response.response.data.message) { 
-          window.location.href = '/Login'
-        }
-        else { 
-          setTxn(response.data)
-        }
+        setTxn(response.data)
       })
       .catch(error => { 
         console.log(error.message)
@@ -129,6 +123,9 @@ export default function History() {
                   date={transaction.transaction_date.split("T")[0]}
                 />
               ))}
+              {transactions.length === 0 && 
+                <Typography variant='p'>No transactions</Typography>
+              }
             </Box>
         ))}
       </Box>

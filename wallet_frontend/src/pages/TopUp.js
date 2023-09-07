@@ -80,23 +80,39 @@ export default function TopUp() {
               <Button
                 type="button"
                 fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={handleTopUp}
-              >
-                Top Up
-              </Button>
-            </form>
-          </div>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: '32px',
-          }}
-        >
+                label="Currency"
+                id="currency"
+                name="currency"
+                value={currency}
+                margin="normal"
+                disabled
+              />
+
+              <TextField
+                autoComplete="amount"
+                name="amount"
+                required
+                fullWidth
+                id="amount"
+                label="Amount to top up"
+                autoFocus
+                variant="outlined"
+                inputRef={amountRef}
+                type="number"
+                margin="normal"
+                step="0.01"
+              />
+            </FormControl>
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={handleTopUp}
+              color='secondary'
+            >
+              Top Up
+            </Button>
         </div>
       </Container>
     </ThemeProvider>

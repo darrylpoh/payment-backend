@@ -14,7 +14,6 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // window.location.href = "/LoginOTP"
     const data = new FormData(event.currentTarget);
     let loginData = {
       email: data.get('email'),
@@ -35,7 +34,7 @@ export default function Login() {
                     const userDetailsJSON = JSON.stringify(response.data);
                     window.localStorage.setItem("userDetails", userDetailsJSON)
                     console.log(userDetailsJSON)
-                    // window.location.href = "/LoginOTP"
+                    window.location.href = "/LoginOTP"
                 })
                 .catch(error => {
                     console.log(error.message)
