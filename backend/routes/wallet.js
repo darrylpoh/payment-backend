@@ -11,7 +11,9 @@ const verifyToken = require('../auth/auth')
 router.get('/', verifyToken, async (req, res) => {
     const userInfo = req.userInfo;
     const userWallet = await Wallet.findOne({
-        user_id: userInfo.user_id
+        where: {
+            user_id: userInfo.user_id
+        }
     });
     res.json({
         data: userWallet,
