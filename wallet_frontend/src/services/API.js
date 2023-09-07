@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 var baseUrl = 'http://localhost:3000'
+var baseUrlOTP = 'https://tiktok-otp-service.onrender.com/api/v1/'
 
 export async function createUser(userDetails) { 
     let api_url = baseUrl + "/user/register";
@@ -79,6 +80,28 @@ export async function getSuspiciousDashboard() {
         const response = await axios.get(api_url); 
         console.log('response ', response); 
         return response.data; 
+    } catch(error) { 
+        return error; 
+    }
+}
+
+export async function requestOTP(email) { 
+    let api_url = baseUrlOTP + '/email/otp'; 
+    try { 
+        const response = await axios.post(api_url, {email: email}); 
+        console.log('response ', response); 
+        return response.data; 
+    } catch(error) { 
+        return error; 
+    }
+}
+
+export async function verifyOTP(verificationDetails) { 
+    let api_url = baseUrlOTP + '/verify/otp'; 
+    try { 
+        const response = await axios.post(api_url, verificationDetails); 
+        console.log('response ', response); 
+        return response; 
     } catch(error) { 
         return error; 
     }
