@@ -1,7 +1,6 @@
 
 
 import React, { useRef, useState, useEffect } from 'react';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Button, TextField, Typography, Container, Box, Avatar, FormControl } from '@mui/material';
 import Logo from '../assets/tiktokLogo.png';
 
@@ -36,7 +35,6 @@ export default function TopUp() {
   })
 
   return (
-    <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
         <div
           style={{
@@ -75,7 +73,7 @@ export default function TopUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={handleTopUp}
-              color='primary'
+              color='secondary'
             >
               Top Up
             </Button>
@@ -84,6 +82,5 @@ export default function TopUp() {
         </div>
         </div>
       </Container>
-    </ThemeProvider>
   );
 }
