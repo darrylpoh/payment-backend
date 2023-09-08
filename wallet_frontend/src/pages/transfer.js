@@ -106,10 +106,22 @@ export default function Transfer() {
   function checkRecipient() { 
     // TODO: call the API that returns a list of all usernames 
     var validUsername;
+    var userUsername;
+    const userDetailsJSON = window.localStorage.getItem("userDetails");
+    if (userDetailsJSON) {
+        const userDetails = JSON.parse(userDetailsJSON);
+        userUsername = userDetails.username
+    }
+    console.log(window.localStorage.getItem("userDetails").username, recipient)
+    if (recipient === userUsername) { 
+      setToastStatement("Cannot send money to yourself");
+      setToastOpen(true);
+      return
+    }
     validateUsername(window.localStorage.getItem("authtoken"), recipient)
       .then(response => { 
-        // console.log(response.data)
-        if (response.data.default_currency) { 
+        console.log("default_currency" in response.data)
+        if ("default_currency" in response.data) { 
           validUsername = true;
           setCurrency(response.data.default_currency)
         } else { 
@@ -120,19 +132,6 @@ export default function Transfer() {
 
         if (validUsername) { 
           setRecipientCheck(true); 
-
-          // fetch('http://localhost:3000/transaction/topup', {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //     'Authorization': 'Bearer ' + window.localStorage.getItem("authtoken")
-          //   },
-          //   body: JSON.stringify({
-          //     "receiver": recipient,
-          //     "sender_amount": amount,
-          //     "receiver_amount": amount, 
-          //   })
-          // })
         }
       })
       .catch(error => { 

@@ -80,7 +80,6 @@ router.post('/transfer', verifyToken, async (req, res) => {
       }).send();
     }
     // Checking if User has Sufficient Balance
-    console.log("BERNICE", parseFloat(sender_wallet.balance) < parseFloat(sender_amount))
     if (parseFloat(sender_wallet.balance) < parseFloat(sender_amount)) {
       res.status(400).json({
         "error": true,
