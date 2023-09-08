@@ -5,7 +5,7 @@ import { Avatar, Button, TextField, Box, Typography, Container, Snackbar } from 
 // import FormControl from '@mui/material/FormControl';
 // import InputLabel from '@mui/material/InputLabel';
 import Logo from '../assets/tiktokLogo.png';
-import { validateUsername } from '../services/API';
+import { validateUsername, transferMoney, getWalletByUser } from '../services/API';
 
 export default function Transfer() {
   const exchangeRatesFromSGD = {
@@ -24,11 +24,45 @@ export default function Transfer() {
   const [recipient, setRecipient] = useState(''); 
   const [recipientCheck, setRecipientCheck] = useState(false); 
   const [toastOpen, setToastOpen] = useState(false);
+  const [toastStatement, setToastStatement] = useState("Error in transaction, please try again later");
   var senderCurrency
   const userDetailsJSON = window.localStorage.getItem("userDetails");
   if (userDetailsJSON) {
     const userDetails = JSON.parse(userDetailsJSON);
     senderCurrency = userDetails.default_currency
+  }
+
+  const handleTransfer = (event) => {
+    event.preventDefault()
+    getWalletByUser(window.localStorage.getItem('authtoken'))
+    .then(response => { 
+      if (parseFloat(response.data.balance) < parseFloat(senderAmount)) { 
+        setToastStatement("Insufficient funds to transfer")
+        setToastOpen(true)
+      } else { 
+        const transferDetails = {
+          receiver: recipient, 
+          sender_amount: parseFloat(senderAmount),
+          receiver_amount: parseFloat(amount)
+        }
+        console.log(transferDetails)
+        const authtoken = window.localStorage.getItem("authtoken")
+        transferMoney(authtoken, transferDetails)
+          .then(response => { 
+            console.log(response)
+            setToastStatement("Transferred successfully")
+            setToastOpen(true)
+          })
+          .catch(error => { 
+            console.log(error.message)
+            setToastStatement("Error in transaction, please try again later")
+            setToastOpen(true)
+          })
+      }
+    })
+    .catch(error => {
+      console.log(error.message)
+    })
   }
 
   const handleToastClose = () => {
@@ -49,7 +83,7 @@ export default function Transfer() {
   };
 
   useEffect(() => { 
-    console.log(senderAmount)
+    // console.log(senderAmount)
   }, [senderAmount])
 
   function handleSearchChange(event) { 
@@ -71,29 +105,40 @@ export default function Transfer() {
 
   function checkRecipient() { 
     // TODO: call the API that returns a list of all usernames 
-    var validUsername; 
+    var validUsername;
     validateUsername(window.localStorage.getItem("authtoken"), recipient)
       .then(response => { 
-        console.log(response.data)
+        // console.log(response.data)
         if (response.data.default_currency) { 
           validUsername = true;
-          console.log(response.data.default_currency)
           setCurrency(response.data.default_currency)
         } else { 
           validUsername = false; 
+          setToastStatement("Username does not exist");
           setToastOpen(true);
         }
 
         if (validUsername) { 
           setRecipientCheck(true); 
-        } 
+
+          // fetch('http://localhost:3000/transaction/topup', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //     'Authorization': 'Bearer ' + window.localStorage.getItem("authtoken")
+          //   },
+          //   body: JSON.stringify({
+          //     "receiver": recipient,
+          //     "sender_amount": amount,
+          //     "receiver_amount": amount, 
+          //   })
+          // })
+        }
       })
       .catch(error => { 
         console.log(error.message)
         setToastOpen(true);
       })
-
-    
   }
 
   useEffect(() => { 
@@ -117,16 +162,13 @@ export default function Transfer() {
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Make a transfer
+          Make a Transfer
         </Typography>
         <Box 
           component="form" 
           noValidate 
           sx={{ mt: 1 }} 
-          onSubmit={(e) => {
-              e.preventDefault();
-              // Call backend to process payment/transfer later on
-            }}
+          // onSubmit={handleTransfer}
           >
           {/* <FormControl fullWidth margin='normal'>
             <InputLabel id="recipient-label">Recipient</InputLabel>
@@ -154,6 +196,7 @@ export default function Transfer() {
             value={recipient}
             onChange={(event) => handleSearchChange(event)}
             margin="normal"
+            disabled={recipientCheck}
           />
 
           {!recipientCheck &&
@@ -198,10 +241,7 @@ export default function Transfer() {
                 color='secondary'
                 variant="contained"
                 sx={{ mt: 3, mb: 2,}}
-                onClick={(e) => {
-                  e.preventDefault();
-                  // Call backend to process payment/transfer later on
-                }}
+                onClick={handleTransfer}
               >
                 Transfer
               </Button>
@@ -225,7 +265,7 @@ export default function Transfer() {
       open={toastOpen}
       autoHideDuration={2000}
       onClose={handleToastClose}
-      message="Username does not exist"
+      message={toastStatement}
       style={{ marginBottom: '120px' }}
     />
   </Container>
