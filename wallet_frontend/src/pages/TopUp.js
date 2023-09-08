@@ -13,32 +13,9 @@ export default function TopUp() {
   const handleTopUp = async () => {
     const amount = amountRef.current.value;
     const token = window.localStorage.getItem('authtoken')
-    console.log(token)
+    // console.log(token)
 
-    fetch('http://localhost:3000/transaction/topup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify({
-          "topup_amount": amount
-        })
-      })
-
-    // fetch('http://localhost:3000/checkout-session', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ items: [{id: Number(amount), quantity: 1}] }),
-    // }).then(res => { 
-    //   if (res.ok) return res.json()
-    // }).then(({ url }) => {
-    //   console.log(url)
-    //   window.location = url
-    // }).then(
-    //   fetch('http://localhost:3000/transaction/topup', {
+    // fetch('http://localhost:3000/transaction/topup', {
     //     method: 'POST',
     //     headers: {
     //       'Content-Type': 'application/json',
@@ -47,9 +24,32 @@ export default function TopUp() {
     //     body: JSON.stringify({
     //       "topup_amount": amount
     //     })
-      // }
-      // )
-    // )
+    //   })
+
+    fetch('http://localhost:3000/checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ items: [{id: Number(amount), quantity: 1}] }),
+    }).then(res => { 
+      if (res.ok) return res.json()
+    }).then(({ url }) => {
+      console.log(url)
+      window.location = url
+    }).then(
+      fetch('http://localhost:3000/transaction/topup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+          "topup_amount": amount
+        })
+      }
+      )
+    )
   };
 
   useEffect(() => { 
