@@ -13,3 +13,9 @@
 ## Instructions to run the frontend codes
 1. run `npm install` if you haven't done so for backend
 2. To start the development server and run the web page locally, run `npm start`
+
+
+## If you face the error of "Cannot find module 'stripe'"
+1. run `npm install stripe` 
+
+
