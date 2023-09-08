@@ -12,6 +12,7 @@ export default function TopUp() {
 
   const handleTopUp = async () => {
     const amount = amountRef.current.value;
+    const token = window.localStorage.getItem('authtoken')
 
     fetch('http://localhost:3000/checkout-session', {
       method: 'POST',
@@ -20,12 +21,22 @@ export default function TopUp() {
       },
       body: JSON.stringify({ items: [{id: Number(amount), quantity: 1}] }),
     }).then(res => { 
-      // console.log('test')
       if (res.ok) return res.json()
     }).then(({ url }) => {
       console.log(url)
       window.location = url
-    })
+    }).then(
+      fetch('http://localhost:3000/transaction/topup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({
+          "topup_amount": amount
+        })
+      })
+    )
   };
 
   useEffect(() => { 
