@@ -75,12 +75,13 @@ router.get('/:username',verifyToken, async (req, res) => {
                 "error": false,
                 "message": "No User Found"
             })
+        } else { 
+            res.json({
+                data: userInfo,
+                "error": false,
+                "message": "User detail fetched successfully"
+            })
         }
-        res.json({
-            data: userInfo,
-            "error": false,
-            "message": "User detail fetched successfully"
-        })
     } catch (error) {
         console.log(error);
         res.json({
