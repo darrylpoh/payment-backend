@@ -219,7 +219,40 @@ userList.forEach((user) => {
 // Make and reorganize the output nicer for frontend
 const usersData = [];
 
-records.forEach((userTransactions) => {
+// records.forEach((userTransactions) => {
+//   const userId = userTransactions['0'].user;
+//   const transactions = [];
+
+//   for (const key in userTransactions) {
+//     if (Object.hasOwnProperty.call(userTransactions, key)) {
+//       const transaction = userTransactions[key];
+//       const { user, ...transactionData } = transaction;
+//       transactions.push(transactionData);
+//     }
+//   }
+
+//   user_info = await getUser(userId)
+//   var username = user_info.username
+//   var full_name = user_info.full_name
+
+//   console.log(user_info)
+ 
+
+//   const userObject = {
+//     user_id: userId,
+//     user_name: username,
+//     full_name: full_name,
+//     transactions: transactions,
+//   };
+
+//   usersData.push(userObject);
+// });
+
+// res.json({'results':usersData});
+
+
+
+for (const userTransactions of records) {
   const userId = userTransactions['0'].user;
   const transactions = [];
 
@@ -230,19 +263,32 @@ records.forEach((userTransactions) => {
       transactions.push(transactionData);
     }
   }
-  const userObject = {
-    user_id: userId,
-    transactions: transactions,
-  };
-  usersData.push(userObject);
-});
 
-res.json({'results':usersData});
+  try {
+    const user_info = await getUser(userId);
+    var username = user_info.username;
+    var full_name = user_info.full_name;
+
+
+    const userObject = {
+      user_id: userId,
+      user_name: username,
+      full_name: full_name,
+      transactions: transactions,
+    };
+
+    usersData.push(userObject);
+  } catch (error) {
+
+
+  }
+}
+
+res.json({ 'results': usersData });
 
 
 
   } catch (error) {
-    console.error(error);
     res.status(500).json({
       error: true,
       message: "Error",
@@ -250,6 +296,36 @@ res.json({'results':usersData});
   }
 
 });
+
+
+
+
+async function getUser(userId) {
+
+  try {
+    const userInfo = await User.findOne({
+        attributes: ['username',  'full_name'],
+        where: {
+            user_Id: userId
+        }
+    });
+    if (!userInfo) {
+      return 'Error'
+    }
+
+    else{
+      username = userInfo
+    }
+  } catch (error) {
+
+    return 'Error'
+  }
+
+  return username;
+
+
+}
+
 
 
 
