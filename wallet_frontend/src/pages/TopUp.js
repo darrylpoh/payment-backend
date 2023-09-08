@@ -1,8 +1,9 @@
 
-import React, { useRef, useState, useEffect } from 'react';
-import { Button, TextField, Typography, Container, FormControl } from '@mui/material';
 
+import React, { useRef, useState, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Button, TextField, Typography, Container, Box, Avatar, FormControl } from '@mui/material';
+import Logo from '../assets/tiktokLogo.png';
 
 const theme = createTheme({
   palette: {
