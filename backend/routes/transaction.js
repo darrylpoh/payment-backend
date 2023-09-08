@@ -156,7 +156,8 @@ router.post('/topup', verifyToken, async (req, res) => {
   const topup_amount = req.body.topup_amount;
   try {
     // Checking for Existance of User Wallet
-    const user_wallet = await User.find({user_id: user_id}).exec();
+    const user_wallet = await User.findOne({where: {
+      user_id: user_id}});
     if (!user_wallet) {
       res.status(404).json({
         "error": true,
@@ -175,7 +176,14 @@ router.post('/topup', verifyToken, async (req, res) => {
     });
     const transactionExecuted = await transaction.save();
     if (transactionExecuted) {
-      user_wallet.balance += topup_amount;
+
+      // test code
+      // if (user_wallet.balance == undefined) {
+      //   user_wallet.balance = Number(topup_amount);
+      // } else {
+      //   user_wallet.balance += Number(topup_amount);
+      // }
+      // console.log(user_wallet.balance)
       await user_wallet.save(function(err,result){
         if (err){
             console.status(400).log(err);
@@ -185,6 +193,7 @@ router.post('/topup', verifyToken, async (req, res) => {
             }).send();
         }
     })
+    console.log(user_wallet)
       res.status(200).json({
         "Message": transaction.toJSON()
       })
