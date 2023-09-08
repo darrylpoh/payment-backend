@@ -3,7 +3,7 @@ import { Avatar, Button, TextField, Link, Box, Typography, Container, Snackbar }
 import Logo from '../assets/tiktokLogo.png';
 import { firebaseAuth } from '../services/firebase';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
-import { getUser } from '../services/API';
+import { requestOTP } from '../services/API';
 
 export default function Login() {
     const [toastOpen, setToastOpen] = React.useState(false);
@@ -15,8 +15,9 @@ export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const loginEmail = data.get('email')
     let loginData = {
-      email: data.get('email'),
+      email: loginEmail,
       password: data.get('password'),
     };
     // const response = loginUser(loginData)
@@ -26,19 +27,25 @@ export default function Login() {
             // Signed in
             const user = userCredential.user;
             console.log(user);
-            window.localStorage.setItem('authtoken', user.accessToken)
-            window.localStorage.setItem('userId', user.uid)
-            getUser(user.accessToken) 
+            if (loginEmail.includes("@test.com")) { 
+                window.localStorage.setItem('testAccount', true)
+                window.localStorage.setItem('authtoken', user.accessToken)
+                window.localStorage.setItem('userId', user.uid)
+                window.location.href = "/LoginOTP"
+            } else { 
+                requestOTP(loginEmail)
                 .then(response => { 
                     console.log(response)
-                    const userDetailsJSON = JSON.stringify(response.data);
-                    window.localStorage.setItem("userDetails", userDetailsJSON)
-                    console.log(userDetailsJSON)
+                    window.localStorage.setItem("verification_key", response.Details)
+                    window.localStorage.setItem("email", loginEmail)
+                    window.localStorage.setItem('authtokentemp', user.accessToken)
+                    window.localStorage.setItem('userIdtemp', user.uid)
                     window.location.href = "/LoginOTP"
                 })
-                .catch(error => {
+                .catch(error => { 
                     console.log(error.message)
                 })
+            }
         })
         .catch((error) => {
             const errorCode = error.code;

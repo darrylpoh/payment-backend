@@ -46,7 +46,7 @@ export default function TransactionIndiv() {
       <Avatar sx={{ m: 1, bgcolor: 'primary.main', color: 'black' }}>
           <Box component="img" src={Logo} height={40}></Box>
       </Avatar>
-      <Box marginX={2} marginTop={2} width="80%">
+      <Box marginX={2} marginTop={2} width="80%" style={{ overflow: "scroll" }}>
         <Table aria-label="simple table">
           <TableBody>
               <TableRow sx={{ '&:last-child td, &:last-child th': { borderBottom: '1px solid', borderColor: 'primary.light' } }}>

@@ -5,14 +5,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Button, TextField, Typography, Container, Box, Avatar, FormControl } from '@mui/material';
 import Logo from '../assets/tiktokLogo.png';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#EE1D52',
-    },
-  },
-});
-
 export default function TopUp() {
   const amountRef = useRef(null);
 

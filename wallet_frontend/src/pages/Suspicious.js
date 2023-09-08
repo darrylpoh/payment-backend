@@ -1,9 +1,8 @@
 import {React, useEffect, useState} from 'react';
-import {Stack, Chip, Box, Table, TableBody, TableRow, TableCell, TableHead} from '@mui/material';
+import {Box, Table, TableBody, TableRow, TableCell, TableHead} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import TransactionLine from '../components/TransactionLine';
-import { getAllTransactions, getSuspiciousDashboard } from '../services/API';
+import { getSuspiciousDashboard } from '../services/API';
 import CheckIcon from '@mui/icons-material/Check';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 

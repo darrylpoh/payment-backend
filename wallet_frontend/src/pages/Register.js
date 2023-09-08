@@ -7,8 +7,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 import Logo from '../assets/tiktokLogo.png';
 import { createUser } from '../services/API';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { firebaseAuth } from '../services/firebase';
 
 export default function Register() {
 
