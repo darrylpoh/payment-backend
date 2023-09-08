@@ -71,7 +71,7 @@ export default function Transfer() {
 
   function checkRecipient() { 
     // TODO: call the API that returns a list of all usernames 
-    var validUsername; 
+    var validUsername;
     validateUsername(window.localStorage.getItem("authtoken"), recipient)
       .then(response => { 
         console.log(response.data)
@@ -86,14 +86,25 @@ export default function Transfer() {
 
         if (validUsername) { 
           setRecipientCheck(true); 
-        } 
+
+          // fetch('http://localhost:3000/transaction/topup', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //     'Authorization': 'Bearer ' + window.localStorage.getItem("authtoken")
+          //   },
+          //   body: JSON.stringify({
+          //     "receiver": recipient,
+          //     "sender_amount": amount,
+          //     "receiver_amount": amount, 
+          //   })
+          // })
+        }
       })
       .catch(error => { 
         console.log(error.message)
         setToastOpen(true);
       })
-
-    
   }
 
   useEffect(() => { 
