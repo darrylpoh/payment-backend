@@ -106,3 +106,18 @@ export async function verifyOTP(verificationDetails) {
         return error; 
     }
 }
+
+export async function transferMoney(auth, transferDetails) { 
+    let api_url = baseUrl + '/transaction/transfer'; 
+    try { 
+        const response = await axios.post(api_url, transferDetails, { 
+            headers: {
+                'Authorization': 'Bearer ' + auth
+              }
+        }); 
+        console.log('response ', response); 
+        return response; 
+    } catch(error) { 
+        return error; 
+    }
+}
