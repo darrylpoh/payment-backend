@@ -4,13 +4,15 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const testRouter = require('./routes/test');
 const functions = require("firebase-functions");
+require('dotenv')
+require("dotenv").config()
 
 const Stripe = require('stripe');
 const stripe = Stripe(process.env.STRIPE_PRIVATE_KEY);
-const dotenv = require('dotenv');
-dotenv.config({
-    path: '.localenv'
-});
+// const dotenv = require('dotenv');
+// dotenv.config({
+//     path: '.localenv'
+// });
 const app = express();
 const port = 3000;
 app.use(cors())
@@ -87,14 +89,14 @@ app.post('/checkout-session', async (req, res) => {
     res.json({ url: session.url })
 });
 
-// app.listen(port, () => {
-//     console.log(`Server started on http://localhost:${port}`);
-// });
+app.listen(port, () => {
+    console.log(`Server started on http://localhost:${port}`);
+});
 
-if (process.env.local === 'true') {
-    app.listen(port, () => {
-        console.log(`Server started on http://localhost:${port}`);
-    });
-} else {
-    exports.api = functions.https.onRequest(app);
-}
+// if (process.env.local === 'true') {
+//     app.listen(port, () => {
+//         console.log(`Server started on http://localhost:${port}`);
+//     });
+// } else {
+//     exports.api = functions.https.onRequest(app);
+// }

@@ -1,9 +1,8 @@
 
 import React, { useRef, useState, useEffect } from 'react';
-import { Button, TextField, Typography, Container, Box, Avatar, FormControl } from '@mui/material';
+import { Button, TextField, Typography, Container, FormControl } from '@mui/material';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import FormControl from '@mui/material/FormControl';
 
 const theme = createTheme({
   palette: {
@@ -77,43 +76,19 @@ export default function TopUp() {
                   inputRef={amountRef}
                   type="number"
                 />
-              </FormControl>
               <Button
-                type="button"
-                fullWidth
-                label="Currency"
-                id="currency"
-                name="currency"
-                value={currency}
-                margin="normal"
-                disabled
-              />
-
-              <TextField
-                autoComplete="amount"
-                name="amount"
-                required
-                fullWidth
-                id="amount"
-                label="Amount to top up"
-                autoFocus
-                variant="outlined"
-                inputRef={amountRef}
-                type="number"
-                margin="normal"
-                step="0.01"
-              />
-            </FormControl>
-            <Button
               type="button"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
               onClick={handleTopUp}
-              color='secondary'
+              color='primary'
             >
               Top Up
             </Button>
+            </FormControl>
+          </form>
+        </div>
         </div>
       </Container>
     </ThemeProvider>
