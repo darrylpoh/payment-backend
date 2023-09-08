@@ -35,7 +35,7 @@ export default function TopUp() {
     }).then(res => { 
       if (res.ok) return res.json()
     }).then(({ url }) => {
-      console.log(url)
+      // console.log(url)
       window.location = url
     }).then(
       fetch('http://localhost:3000/transaction/topup', {

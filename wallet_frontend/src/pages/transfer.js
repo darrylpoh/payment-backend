@@ -49,7 +49,7 @@ export default function Transfer() {
   };
 
   useEffect(() => { 
-    console.log(senderAmount)
+    // console.log(senderAmount)
   }, [senderAmount])
 
   function handleSearchChange(event) { 
@@ -74,10 +74,9 @@ export default function Transfer() {
     var validUsername;
     validateUsername(window.localStorage.getItem("authtoken"), recipient)
       .then(response => { 
-        console.log(response.data)
+        // console.log(response.data)
         if (response.data.default_currency) { 
           validUsername = true;
-          console.log(response.data.default_currency)
           setCurrency(response.data.default_currency)
         } else { 
           validUsername = false; 
