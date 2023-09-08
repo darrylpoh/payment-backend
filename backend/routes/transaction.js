@@ -164,6 +164,8 @@ router.post('/topup', verifyToken, async (req, res) => {
         "message": "User Wallet Not Found!"
       }).send();
     }
+    
+
     const transaction = new Transaction({
       receiver_id: user_id,
       amount: topup_amount,
@@ -184,16 +186,32 @@ router.post('/topup', verifyToken, async (req, res) => {
       //   user_wallet.balance += Number(topup_amount);
       // }
       // console.log(user_wallet.balance)
-      await user_wallet.save(function(err,result){
-        if (err){
-            console.status(400).log(err);
-            res.json({
-              "error": true,
-              "message": "Error with Receiving"
-            }).send();
+    //   await user_wallet.save(function(err,result){
+    //     if (err){
+    //         console.status(400).log(err);
+    //         res.json({
+    //           "error": true,
+    //           "message": "Error with Receiving"
+    //         }).send();
+    //     }
+    // })
+
+      /*
+        get user wallet based on user_id
+        update user wallet based on curr balance + topup amount
+      */
+      const userWallet =  await Wallet.findOne({
+        where: {
+          user_id: user_id
         }
-    })
-    console.log(user_wallet)
+      })
+      let currBalance = userWallet.dataValues.balance
+      await Wallet.update(
+        {balance: String(Number(currBalance)+Number(topup_amount))},  
+        {where: {user_id: user_id}}
+        )
+      
+
       res.status(200).json({
         "Message": transaction.toJSON()
       })
