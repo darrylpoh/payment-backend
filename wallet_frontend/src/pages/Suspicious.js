@@ -27,7 +27,7 @@ export default function Susipicious() {
         </Box>
             {results.map((result) => (
                 <Box marginBottom={8}>
-                    <Typography marginTop={2} variant='h6' color='primary.main' display={'block'}>{result.user_id}</Typography>
+                    <Typography marginTop={2} variant='h6' color='primary.main' display={'block'}>{result.user_name} ({result.user_id})</Typography>
                     <Table aria-label="simple table">
                         <TableHead> 
                             <TableCell align="center"><b>Expected amount</b></TableCell>
