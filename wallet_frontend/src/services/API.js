@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-var baseUrl = 'https://tiktok-otp-service.onrender.com'
+var baseUrl = 'https://tiktok-pay-service-vuie.onrender.com'
 var baseUrlOTP = 'http://ec2-13-250-13-188.ap-southeast-1.compute.amazonaws.com:4500/api/v1'
 
 export async function createUser(userDetails) { 
