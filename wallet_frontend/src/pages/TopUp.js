@@ -31,7 +31,7 @@ export default function TopUp() {
     //     })
     //   })
 
-    fetch('https://tiktok-otp-service.onrender.com/checkout-session', {
+    fetch('https://tiktok-pay-service-vuie.onrender.com/checkout-session', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -43,7 +43,7 @@ export default function TopUp() {
       // console.log(url)
       window.location = url
     }).then(
-      fetch('https://tiktok-otp-service.onrender.com/transaction/topup', {
+      fetch('https://tiktok-pay-service-vuie.onrender.com/transaction/topup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
