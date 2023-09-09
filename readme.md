@@ -8,8 +8,8 @@
 2. To start the development server and run the web page locally, run `npm run start`
 
 ## Testing of the Stripe API 
-- Email: Any valid email 
+- Email: Any valid email (e.g. test@gmail.com)
 - Card number: 4242 4242 4242 4242
 - Expiry date: Any valid future date (e.g. 12/34) 
 - CVC: Any 3-digit number (or 4-digit for American Express card) (e.g. 123)
-- Name: Any
+- Name: Any (e.g. John Smith)
