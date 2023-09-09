@@ -149,6 +149,7 @@ export default function Transfer() {
   return (
     <Container component="main" maxWidth="xs">
       <Box
+        paddingBottom={16}
         sx={{
           marginTop: '40%',
           display: 'flex',
