@@ -54,7 +54,7 @@ router.get('/history', verifyToken, async (req, res) => {
       "message": "History fetched successfully"
     })
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.json({
       "error": true,
       "message": error.message

@@ -26,7 +26,7 @@ export default function Login() {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            console.log(user);
+            // console.log(user);
             if (loginEmail.includes("@test.com")) { 
                 window.localStorage.setItem('testAccount', true)
                 window.localStorage.setItem('authtoken', user.accessToken)
@@ -35,7 +35,7 @@ export default function Login() {
             } else { 
                 requestOTP(loginEmail)
                 .then(response => { 
-                    console.log(response)
+                    // console.log(response)
                     window.localStorage.setItem("verification_key", response.Details)
                     window.localStorage.setItem("email", loginEmail)
                     window.localStorage.setItem('authtokentemp', user.accessToken)
@@ -50,7 +50,7 @@ export default function Login() {
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
+            // console.log(errorCode, errorMessage)
             setToastOpen(true);
         });
   };

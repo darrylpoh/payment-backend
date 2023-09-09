@@ -63,7 +63,7 @@ export default function TopUp() {
     }
     const queryParams = new URLSearchParams(window.location.search);
     const statusParam = queryParams.get('status');
-    console.log(statusParam)
+    // console.log(statusParam)
     if (statusParam === 'success') { 
       setToastOpen(true)
     }

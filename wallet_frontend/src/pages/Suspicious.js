@@ -12,7 +12,7 @@ export default function Susipicious() {
   useEffect(() => {
     getSuspiciousDashboard()
         .then(response => { 
-            console.log(response.results)
+            // console.log(response.results)
             setResults(response.results)
         })
         .catch(error => { 

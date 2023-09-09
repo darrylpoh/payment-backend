@@ -32,7 +32,7 @@ export default function History() {
   }
 
   function txnType(transaction) { 
-    console.log(transaction)
+    // console.log(transaction)
     const userId = window.localStorage.getItem("userId"); 
     if (transaction.is_top_up) { 
         return "topup"
@@ -47,7 +47,7 @@ export default function History() {
     if (window.localStorage.getItem("authtoken") === null) { 
       window.location.href = '/Login'
     }
-    console.log(window.localStorage.getItem('authtoken'))
+    // console.log(window.localStorage.getItem('authtoken'))
     getAllTransactions(window.localStorage.getItem('authtoken'))
       .then(response => { 
         setTxn(response.data)

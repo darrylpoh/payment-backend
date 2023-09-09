@@ -63,13 +63,13 @@ export default function Home() {
             setSuggRecipients(top3recipients)
           })
           .catch(error => { 
-            console.log(error.message)
+            // console.log(error.message)
             window.location.href = '/Login'
           })
-        console.log(window.localStorage.getItem('authtoken'))
+        // console.log(window.localStorage.getItem('authtoken'))
         getWalletByUser(window.localStorage.getItem('authtoken'))
           .then(response => { 
-            console.log(response.data)
+            // console.log(response.data)
             setBalance(response.data.balance)
           })
           .catch(error => {

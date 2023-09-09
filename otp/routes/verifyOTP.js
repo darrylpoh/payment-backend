@@ -96,7 +96,7 @@ router.post('/verify/otp', async (req, res, next) => {
 
     const otp_instance= await OTP.findById(new mongoose.Types.ObjectId(obj.otp_id))
 
-    console.log(obj);
+    // console.log(obj);
 
     //Check if OTP is available in the DB
     if(otp_instance!=null){

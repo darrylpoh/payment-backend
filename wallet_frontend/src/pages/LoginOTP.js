@@ -21,10 +21,10 @@ export default function LoginOTP() {
     if (window.localStorage.getItem('testAccount')) { 
       getUser(window.localStorage.getItem('authtoken')) 
       .then(response => { 
-          console.log(response)
+          // console.log(response)
           const userDetailsJSON = JSON.stringify(response.data);
           window.localStorage.setItem("userDetails", userDetailsJSON)
-          console.log(userDetailsJSON)
+          // console.log(userDetailsJSON)
           window.localStorage.removeItem('testAccount')
           window.location.href = '/';
       })
@@ -33,16 +33,16 @@ export default function LoginOTP() {
       })
     } else {
       const data = new FormData(event.currentTarget)
-      console.log(data, otp)
+      // console.log(data, otp)
       let verificationDetails = { 
         verification_key: window.localStorage.getItem("verification_key"), 
         otp: parseInt(otp), 
         check: window.localStorage.getItem("email")
       }
-      console.log(verificationDetails)
+      // console.log(verificationDetails)
       verifyOTP(verificationDetails)
         .then(response => { 
-          console.log(response)
+          // console.log(response)
           if (response.status) { 
             let authtoken = window.localStorage.getItem("authtokentemp")
             window.localStorage.setItem("authtoken", authtoken)
@@ -53,10 +53,10 @@ export default function LoginOTP() {
             window.localStorage.removeItem("userIdtemp")
             getUser(authtoken) 
               .then(response => { 
-                  console.log(response)
+                  // console.log(response)
                   const userDetailsJSON = JSON.stringify(response.data);
                   window.localStorage.setItem("userDetails", userDetailsJSON)
-                  console.log(userDetailsJSON)
+                  // console.log(userDetailsJSON)
                   window.location.href = '/';
               })
               .catch(error => {
