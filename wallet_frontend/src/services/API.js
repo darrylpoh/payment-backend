@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-var baseUrl = 'http://localhost:3000'
+var baseUrl = 'http://ec2-54-255-139-122.ap-southeast-1.compute.amazonaws.com:3000'
 var baseUrlOTP = 'http://ec2-13-250-13-188.ap-southeast-1.compute.amazonaws.com:4500/api/v1'
 
 export async function createUser(userDetails) { 
