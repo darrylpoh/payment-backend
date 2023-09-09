@@ -32,7 +32,7 @@ export default function LoginOTP() {
           console.log(error.message)
       })
     } else {
-      const data = new FormData(event.currentTarget)
+      // const data = new FormData(event.currentTarget)
       // console.log(data, otp)
       let verificationDetails = { 
         verification_key: window.localStorage.getItem("verification_key"), 
