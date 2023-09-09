@@ -71,7 +71,7 @@ app.post('/checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         mode: 'payment',
-        success_url: "http://localhost:3001/TopUp?status=successful",
+        success_url: "https://main.d3bhvrrl2re3sq.amplifyapp.com/TopUp?status=successful",
         line_items: req.body.items.map(item => {
             const storeItem = storeItems.get(item.id)
             return {
