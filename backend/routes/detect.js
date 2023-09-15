@@ -199,7 +199,7 @@ userList.forEach((user) => {
 
     // if >=0.8 is an anomaly.
 
-    if (forest.scores()[i]>=0.8) {
+    if (forest.scores()[i]>=0.7) {
       anomaly= true;
     }
 
