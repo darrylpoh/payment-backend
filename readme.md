@@ -1,9 +1,6 @@
 
 # Corepay was done as a Hackathon submission for Tiktok 
 
-
-# Corepay
-
 ## Empowering underserved communities with CorePay: A mobile digital wallet that enables everyone to withdraw or deposit via cash or card, and transact across borders in multiple currencies. [https://devpost.com/software/null-7idl3g]
 
 Done by: 
